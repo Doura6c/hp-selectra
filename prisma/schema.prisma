@@ -1,0 +1,203 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Vertical {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  icon        String
+  description String
+  isActive    Boolean   @default(true)
+  isLive      Boolean   @default(false)
+  order       Int       @default(0)
+  seoTitle    String?
+  seoDesc     String?
+
+  providers Provider[]
+  offers    Offer[]
+  leads     Lead[]
+  articles  Article[]
+  scores    ScoringConfig[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Provider {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  name          String
+  logo          String?
+  description   String?
+  verticalId    String
+  vertical      Vertical      @relation(fields: [verticalId], references: [id])
+  hpScore       String?
+  hpScoreNum    Float?
+  verified      Boolean       @default(false)
+  website       String?
+  whatsapp      String?
+  phone         String?
+  regulatorRef  String?
+  sponsoredTier String        @default("free")
+  isActive      Boolean       @default(true)
+  seoTitle      String?
+  seoDesc       String?
+
+  offers   Offer[]
+  reviews  Review[]
+  leads    Lead[]
+  coverage CoverageZone[]
+  clicks   OfferClick[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Offer {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  providerId     String
+  provider       Provider @relation(fields: [providerId], references: [id])
+  verticalId     String
+  vertical       Vertical @relation(fields: [verticalId], references: [id])
+  name           String
+  category       String
+  description    String?
+  priceNote      String?
+  priceIsExample Boolean  @default(true)
+  hpScore        String?
+  hpScoreNum     Float?
+  isActive       Boolean  @default(true)
+  isFeatured     Boolean  @default(false)
+  affiliateUrl   String?
+  seoTitle       String?
+  seoDesc        String?
+
+  details OfferDetail[]
+  reviews Review[]
+  clicks  OfferClick[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OfferDetail {
+  id          String  @id @default(cuid())
+  offerId     String
+  offer       Offer   @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  key         String
+  value       String
+  unit        String?
+  isHighlight Boolean @default(false)
+  order       Int     @default(0)
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  providerId  String
+  provider    Provider @relation(fields: [providerId], references: [id])
+  offerId     String?
+  offer       Offer?   @relation(fields: [offerId], references: [id])
+  authorName  String
+  rating      Int
+  body        String
+  status      String   @default("pending")
+  moderatedAt DateTime?
+
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id                   String    @id @default(cuid())
+  verticalId           String?
+  vertical             Vertical? @relation(fields: [verticalId], references: [id])
+  attributedProviderId String?
+  provider             Provider? @relation(fields: [attributedProviderId], references: [id])
+  channel              String
+  name                 String?
+  phone                String?
+  email                String?
+  message              String?
+  status               String    @default("new")
+  consentGiven         Boolean   @default(false)
+  utmSource            String?
+  utmMedium            String?
+  utmCampaign          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OfferClick {
+  id         String   @id @default(cuid())
+  offerId    String
+  offer      Offer    @relation(fields: [offerId], references: [id])
+  providerId String
+  provider   Provider @relation(fields: [providerId], references: [id])
+  utmSource  String?
+  utmMedium  String?
+  ip         String?
+
+  createdAt DateTime @default(now())
+}
+
+model Article {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  body        String
+  excerpt     String?
+  verticalId  String?
+  vertical    Vertical? @relation(fields: [verticalId], references: [id])
+  authorName  String    @default("Équipe HP Selectra")
+  publishedAt DateTime?
+  isPublished Boolean   @default(false)
+  seoTitle    String?
+  seoDesc     String?
+  ogImage     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminUser {
+  id           String  @id @default(cuid())
+  email        String  @unique
+  passwordHash String
+  name         String?
+  role         String  @default("editor")
+  isActive     Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CoverageZone {
+  id          String   @id @default(cuid())
+  providerId  String
+  provider    Provider @relation(fields: [providerId], references: [id])
+  regionName  String
+  hasNetwork  Boolean  @default(true)
+  networkType String
+
+  createdAt DateTime @default(now())
+}
+
+model ScoringConfig {
+  id         String   @id @default(cuid())
+  verticalId String
+  vertical   Vertical @relation(fields: [verticalId], references: [id])
+  criterion  String
+  weight     Float
+  label      String
+  order      Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

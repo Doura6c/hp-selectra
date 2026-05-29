@@ -1,26 +1,108 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ── Marque Help'me Process (HP Selectra) ── */
+  --color-primary: #1d3461;
+  --color-primary-dark: #122040;
+  --color-primary-light: #e8edf5;
+  --color-secondary: #6b8f3c;
+  --color-secondary-dark: #4e6a2c;
+  --color-secondary-light: #eef4e6;
+  --color-accent: #f0a500;
+  --color-accent-dark: #c07f00;
+
+  /* Surfaces */
+  --color-surface: #f8f9fa;
+  --color-card: #ffffff;
+  --color-border: #e5e7eb;
+
+  /* Texte */
+  --color-text: #1d3461;
+  --color-muted: #6b7280;
+
+  /* Sémantique */
+  --color-success: #6b8f3c;
+  --color-warning: #f0a500;
+  --color-danger: #dc2626;
+  --color-danger-dark: #b91c1c;
+
+  /* HP Score A → E */
+  --color-score-a: #6b8f3c;
+  --color-score-b: #8fb84e;
+  --color-score-c: #f0a500;
+  --color-score-d: #e06b00;
+  --color-score-e: #dc2626;
+
+  /* WhatsApp */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #128c7e;
+
+  /* Typographie */
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* Rayons */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Reset & base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+/* HP Score badges */
+.score-a { background-color: var(--color-score-a); color: #fff; }
+.score-b { background-color: var(--color-score-b); color: #fff; }
+.score-c { background-color: var(--color-score-c); color: #fff; }
+.score-d { background-color: var(--color-score-d); color: #fff; }
+.score-e { background-color: var(--color-score-e); color: #fff; }
+
+/* Focus visible ring */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Scrollbar discret */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 999px; }
