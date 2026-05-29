@@ -23,7 +23,14 @@ const NAV_ITEMS = [
       { label: "Tous les services", href: "/mobile-money/fournisseurs/" },
     ],
   },
-  { label: "Banques", href: "/banques/", soon: true },
+  {
+    label: "Banques",
+    href: "/banques/",
+    sub: [
+      { label: "Comparer les comptes", href: "/banques/comparateur/" },
+      { label: "Toutes les banques", href: "/banques/fournisseurs/" },
+    ],
+  },
   { label: "Assurances", href: "/assurances/", soon: true },
   { label: "Actualités", href: "/actualites/" },
 ]
