@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
-import WhatsAppCTA from "@/components/layout/WhatsAppCTA"
+import HPAssistant from "@/components/layout/HPAssistant"
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <WhatsAppCTA />
+        <HPAssistant />
       </body>
     </html>
   )

@@ -5,9 +5,9 @@ import { OFFERS, PROVIDERS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 
 export default function MobileMoneyComparateurPage() {
-  const offers = OFFERS.filter((o) => o.verticalSlug === "mobile-money").sort(
-    (a, b) => b.hpScoreNum - a.hpScoreNum
-  )
+  const offers = OFFERS.filter(
+    (o) => o.verticalSlug === "mobile-money" && o.category === "transfert"
+  ).sort((a, b) => b.hpScoreNum - a.hpScoreNum)
 
   // Colonnes de la grille de comparaison
   const KEYS = ["Dépôt", "Retrait", "Transfert", "Paiement factures", "Carte Visa", "Réseau agents"]

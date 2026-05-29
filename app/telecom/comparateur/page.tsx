@@ -8,6 +8,7 @@ import OfferCard from "@/components/compare/OfferCard"
 const CATEGORIES = [
   { value: "all", label: "Toutes les offres" },
   { value: "forfait-mobile", label: "Forfaits mobiles" },
+  { value: "pass-data", label: "Pass data" },
   { value: "internet-fixe", label: "Internet fixe / Box" },
 ]
 
