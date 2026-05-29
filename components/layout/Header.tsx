@@ -84,23 +84,25 @@ export default function Header() {
                   {item.sub && <ChevronDown className="w-3 h-3 opacity-70" />}
                 </Link>
                 {item.sub && openDrop === item.href && (
-                  <div
-                    className="absolute top-full left-0 mt-1 w-56 rounded-xl shadow-xl border overflow-hidden"
-                    style={{
-                      backgroundColor: "var(--color-card)",
-                      borderColor: "var(--color-border)",
-                    }}
-                  >
-                    {item.sub.map((s) => (
-                      <Link
-                        key={s.href}
-                        href={s.href}
-                        className="block px-4 py-3 text-sm hover:bg-surface transition-colors"
-                        style={{ color: "var(--color-text)" }}
-                      >
-                        {s.label}
-                      </Link>
-                    ))}
+                  <div className="absolute top-full left-0 w-56 pt-2">
+                    <div
+                      className="rounded-xl shadow-xl border overflow-hidden"
+                      style={{
+                        backgroundColor: "var(--color-card)",
+                        borderColor: "var(--color-border)",
+                      }}
+                    >
+                      {item.sub.map((s) => (
+                        <Link
+                          key={s.href}
+                          href={s.href}
+                          className="block px-4 py-3 text-sm hover:bg-surface transition-colors"
+                          style={{ color: "var(--color-text)" }}
+                        >
+                          {s.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
