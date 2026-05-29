@@ -103,10 +103,10 @@ export default function Header() {
           {/* CTA desktop */}
           <div className="hidden lg:flex items-center gap-2">
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224000000000"}?text=Bonjour%2C%20j%27aimerais%20comparer%20des%20offres`}
+              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224000000000"}?text=${encodeURIComponent("Bonjour, je suis sur HP Selectra et j'aimerais être conseillé par un expert Help'me Process.")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors hover:opacity-90"
               style={{ backgroundColor: "var(--color-whatsapp)" }}
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -117,9 +117,13 @@ export default function Header() {
             <a
               href="/contact/"
               className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors"
+              title="Un conseiller Help'me Process vous rappelle gratuitement"
             >
               <Phone className="w-4 h-4" />
-              Rappel gratuit
+              <span>
+                Rappel gratuit
+                <span className="block text-[10px] font-normal opacity-70 leading-none">Help&apos;me Process</span>
+              </span>
             </a>
           </div>
 
