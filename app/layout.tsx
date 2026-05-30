@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import HPAssistant from "@/components/layout/HPAssistant"
 import StickyCTA from "@/components/layout/StickyCTA"
+import BackToTop from "@/components/ui/BackToTop"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? "https://hp-selectra-app.vercel.app"
 
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <HPAssistant />
         <StickyCTA />
+        <BackToTop />
       </body>
     </html>
   )
