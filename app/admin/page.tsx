@@ -16,7 +16,7 @@ const MODULES = [
     icon: Users,
     title: "Fournisseurs",
     desc: "Ajouter, modifier, vérifier les opérateurs et prestataires",
-    count: "7 actifs",
+    count: "21 actifs",
     color: "var(--color-primary)",
   },
   {
@@ -24,7 +24,7 @@ const MODULES = [
     icon: Tag,
     title: "Offres & Tarifs",
     desc: "Mettre à jour les tarifs, activer/désactiver des offres",
-    count: "12 offres",
+    count: "46 offres",
     color: "var(--color-secondary)",
   },
   {
@@ -81,8 +81,8 @@ export default function AdminPage() {
         {/* Stats rapides */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Fournisseurs actifs", value: "7", color: "var(--color-primary)" },
-            { label: "Offres publiées", value: "12", color: "var(--color-secondary)" },
+            { label: "Fournisseurs actifs", value: "21", color: "var(--color-primary)" },
+            { label: "Offres publiées", value: "46", color: "var(--color-secondary)" },
             { label: "Leads ce mois", value: "0", color: "var(--color-accent)" },
             { label: "Avis en attente", value: "0", color: "#8B5CF6" },
           ].map((s) => (
