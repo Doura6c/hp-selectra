@@ -8,6 +8,7 @@ const FOOTER_LINKS = {
     { label: "Internet Fixe (FAI)", href: "/fai/" },
     { label: "Assurances", href: "/assurances/" },
     { label: "Microfinance", href: "/microfinance/" },
+    { label: "Meilleure banque", href: "/banques/meilleur-compte/" },
     { label: "Villes de Guinée", href: "/villes/" },
   ],
   Outils: [

@@ -2,7 +2,15 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import ProviderFilters from "@/components/compare/ProviderFilters"
+import ReviewsSection from "@/components/ui/ReviewsSection"
 import { Phone, MessageCircle, ChevronRight } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Meilleure box internet Guinée 2026 — Comparateur FAI",
+  description:
+    "Comparez les meilleures box internet en Guinée : Orange Box, Telecel Vana, GUILAB, Guinée Télécom. HP Score indépendant — Box 4G, ADSL, Fibre, Satellite.",
+  alternates: { canonical: "https://hp-selectra-app.vercel.app/fai/comparateur/" },
+}
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
 const CC_PHONE  = process.env.NEXT_PUBLIC_CC_PHONE        ?? "224628935335"
@@ -444,6 +452,8 @@ export default function FaiComparateurPage() {
         </div>
 
       </div>
+
+      <ReviewsSection />
     </>
   )
 }

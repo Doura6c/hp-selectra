@@ -82,6 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/mobile-money/guides/frais-transfert`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/mobile-money/guides/comment-envoyer-argent`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/banques/guides/ouvrir-compte`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/banques/meilleur-compte`, lastModified: now, changeFrequency: "monthly", priority: 0.88 },
     { url: `${BASE}/fai/guides/meilleure-box-internet`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/assurances/guides/choisir-assurance`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/microfinance/guides/obtenir-microcredit`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
