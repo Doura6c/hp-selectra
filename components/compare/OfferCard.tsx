@@ -37,12 +37,13 @@ export default function OfferCard({ offer, provider, verticalSlug }: Props) {
             >
               {provider.name}
             </p>
-            <h3
-              className="font-bold text-base leading-tight"
+            <Link
+              href={`/${verticalSlug}/offres/${offer.slug}/`}
+              className="font-bold text-base leading-tight hover:underline"
               style={{ color: "var(--color-text)" }}
             >
               {offer.name}
-            </h3>
+            </Link>
           </div>
           <HPScoreBadge score={offer.hpScore} showLabel size="md" />
         </div>
@@ -77,7 +78,7 @@ export default function OfferCard({ offer, provider, verticalSlug }: Props) {
         {/* CTA */}
         <div className="flex gap-2">
           <Link
-            href={`/${verticalSlug}/fournisseurs/${provider.slug}/`}
+            href={`/${verticalSlug}/offres/${offer.slug}/`}
             className="flex-1 text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
             style={{ backgroundColor: "var(--color-primary)" }}
           >

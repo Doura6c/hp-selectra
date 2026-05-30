@@ -1,11 +1,22 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Search } from "lucide-react"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224000000000"
 
 export default function HeroSection() {
+  const router = useRouter()
+  const [query, setQuery] = useState("")
+
+  function submitSearch(e: React.FormEvent) {
+    e.preventDefault()
+    const q = query.trim()
+    router.push(q ? `/recherche?q=${encodeURIComponent(q)}` : "/recherche")
+  }
+
   return (
     <section
       className="relative overflow-hidden py-16 sm:py-24"
@@ -41,21 +52,27 @@ export default function HeroSection() {
           </p>
 
           {/* Barre de recherche rapide */}
-          <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto mb-6">
+          <form onSubmit={submitSearch} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto mb-6">
             <div className="flex-1 flex items-center gap-2 px-4 py-3 rounded-xl bg-white shadow">
               <Search className="w-4 h-4 shrink-0" style={{ color: "var(--color-muted)" }} />
-              <span className="text-sm" style={{ color: "var(--color-muted)" }}>
-                Que voulez-vous comparer ?
-              </span>
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Que voulez-vous comparer ?"
+                aria-label="Que voulez-vous comparer ?"
+                className="flex-1 outline-none text-sm bg-transparent"
+                style={{ color: "var(--color-text)" }}
+              />
             </div>
-            <Link
-              href="/telecom/comparateur/"
+            <button
+              type="submit"
               className="px-6 py-3 rounded-xl text-sm font-semibold text-white text-center transition-opacity hover:opacity-90"
               style={{ backgroundColor: "var(--color-secondary)" }}
             >
               Comparer
-            </Link>
-          </div>
+            </button>
+          </form>
 
           {/* CTA WhatsApp */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">
