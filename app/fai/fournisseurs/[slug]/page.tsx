@@ -4,8 +4,10 @@ import Link from "next/link"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
+import ProviderMeta from "@/components/ui/ProviderMeta"
+import Breadcrumb from "@/components/ui/Breadcrumb"
 import { Globe, CheckCircle, Phone } from "lucide-react"
-import { buildJsonLd, breadcrumbSchema, organizationSchema } from "@/lib/schema"
+import { buildJsonLd, breadcrumbSchema, providerRatingSchema } from "@/lib/schema"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -41,11 +43,14 @@ export default async function FaiFournisseurPage({ params }: Props) {
 
   const categories = [...new Set(offers.map((o) => o.category))]
 
-  const jsonLdOrg = organizationSchema({
+  const jsonLdOrg = providerRatingSchema({
     name: provider.name,
     description: provider.description,
     url: `/fai/fournisseurs/${provider.slug}/`,
     website: provider.website,
+    hpScore: provider.hpScore,
+    hpScoreNum: provider.hpScoreNum,
+    vertical: "Internet Fixe",
   })
   const jsonLdBreadcrumb = breadcrumbSchema([
     { name: "Accueil", href: "/" },
@@ -64,15 +69,14 @@ export default async function FaiFournisseurPage({ params }: Props) {
         style={{ background: `linear-gradient(135deg, #003087 0%, #0070C0 100%)` }}
       >
         <div className="container">
-          <nav className="text-sm mb-5" style={{ color: "rgba(255,255,255,0.6)" }}>
-            <Link href="/" className="hover:text-white">Accueil</Link>
-            <span className="mx-2">/</span>
-            <Link href="/fai/" className="hover:text-white">Internet Fixe</Link>
-            <span className="mx-2">/</span>
-            <Link href="/fai/fournisseurs/" className="hover:text-white">Fournisseurs</Link>
-            <span className="mx-2">/</span>
-            <span className="text-white">{provider.name}</span>
-          </nav>
+          <Breadcrumb
+            className="mb-5"
+            items={[
+              { label: "Internet Fixe", href: "/fai/" },
+              { label: "Fournisseurs", href: "/fai/fournisseurs/" },
+              { label: provider.name },
+            ]}
+          />
 
           <div className="flex items-start gap-6">
             <div
@@ -127,6 +131,11 @@ export default async function FaiFournisseurPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Meta : auteur + date MAJ */}
+      <div className="container py-4">
+        <ProviderMeta verticalSlug="fai" updatedAt={new Date()} verified={provider.verified} />
+      </div>
 
       {/* Offres */}
       <section className="py-10">

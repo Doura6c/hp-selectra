@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
-import RankedProviderCard from "@/components/compare/RankedProviderCard"
-import { breadcrumbSchema, buildJsonLd } from "@/lib/schema"
+import ProviderFilters from "@/components/compare/ProviderFilters"
+import { breadcrumbSchema, faqSchema, buildJsonLd } from "@/lib/schema"
 import { Phone, MessageCircle, ChevronRight } from "lucide-react"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
@@ -26,14 +26,21 @@ const PROFILES = [
 ]
 
 export default function TelecomComparateurPage() {
-  const jsonLd = buildJsonLd(breadcrumbSchema([
+  const jsonLdBreadcrumb = buildJsonLd(breadcrumbSchema([
     { name: "Accueil", href: "/" },
     { name: "Télécom", href: "/telecom/" },
     { name: "Comparateur" },
   ]))
+  const jsonLdFaq = buildJsonLd(faqSchema([
+    { question: "Quel est le meilleur opérateur mobile en Guinée en 2026 ?", answer: "Orange Guinée (HP Score A, 88/100) domine grâce à sa couverture 4G nationale, ses offres variées et l'intégration Orange Money. Telecel est compétitif sur le data, Cellcom sur les prix bas à Conakry." },
+    { question: "Quel opérateur a la meilleure couverture 4G en Guinée ?", answer: "Orange Guinée dispose du réseau 4G le plus étendu couvrant Conakry et les grandes villes de l'intérieur. Telecel est en expansion rapide. Cellcom couvre principalement les zones urbaines." },
+    { question: "Comment activer un pass data en Guinée ?", answer: "Composez le code USSD de votre opérateur (ex: *200# Orange, *440# Telecel) ou utilisez l'application officielle. Nos conseillers peuvent vous guider gratuitement au +224 62 893 5335." },
+    { question: "La portabilité du numéro existe-t-elle en Guinée ?", answer: "La portabilité des numéros est en cours de déploiement sous la supervision de l'ARPT (Autorité de Régulation des Postes et Télécommunications de Guinée). Renseignez-vous auprès de votre opérateur." },
+  ]))
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdBreadcrumb }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdFaq }} />
 
       {/* Hero */}
       <section className="relative overflow-hidden py-14 sm:py-20"
@@ -139,24 +146,25 @@ export default function TelecomComparateurPage() {
           </div>
         </div>
 
-        {/* Classement */}
+        {/* Classement avec filtres dynamiques */}
         <section id="classement" className="mb-16">
           <h2 className="text-2xl sm:text-3xl font-extrabold mb-2" style={{ color: "var(--color-text)" }}>
             🏆 Classement des opérateurs mobiles guinéens
           </h2>
-          <p className="text-sm mb-8" style={{ color: "var(--color-muted)" }}>
+          <p className="text-sm mb-6" style={{ color: "var(--color-muted)" }}>
             {TELECOMS.length} opérateurs analysés · Couverture, tarifs, qualité réseau, offres data.
           </p>
-          <div className="space-y-6">
-            {TELECOMS.map((op, i) => {
-              const offers = OFFERS.filter((o) => o.providerSlug === op.slug && o.verticalSlug === "telecom")
-                .sort((a, b) => b.hpScoreNum - a.hpScoreNum)
-              return (
-                <RankedProviderCard key={op.slug} provider={op} rank={i + 1}
-                  verticalSlug="telecom" topOffers={offers} isRecommended={i === 0} />
-              )
-            })}
-          </div>
+          <ProviderFilters
+            providers={TELECOMS}
+            offersByProvider={Object.fromEntries(
+              TELECOMS.map((op) => [
+                op.slug,
+                OFFERS.filter((o) => o.providerSlug === op.slug && o.verticalSlug === "telecom")
+                  .sort((a, b) => b.hpScoreNum - a.hpScoreNum),
+              ])
+            )}
+            verticalSlug="telecom"
+          />
         </section>
 
         {/* Offres phares */}

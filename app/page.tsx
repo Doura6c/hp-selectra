@@ -8,6 +8,7 @@ import AdvisorsSection from "@/components/home/AdvisorsSection"
 import ArticlesSection from "@/components/home/ArticlesSection"
 import LeadCTA from "@/components/home/LeadCTA"
 import Reveal from "@/components/ui/Reveal"
+import ReviewsSection from "@/components/ui/ReviewsSection"
 
 export const metadata: Metadata = {
   title: "HP Selectra Guinée — Comparez les meilleures offres",
@@ -28,6 +29,7 @@ export default function HomePage() {
       <Reveal><HowItWorks /></Reveal>
       <Reveal><AdvisorsSection /></Reveal>
       <Reveal><ArticlesSection /></Reveal>
+      <Reveal><ReviewsSection /></Reveal>
       <Reveal><LeadCTA /></Reveal>
     </>
   )

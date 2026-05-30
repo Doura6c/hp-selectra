@@ -8,11 +8,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: now, changeFrequency: "daily", priority: 1 },
+    { url: `${BASE}/equipe`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/mon-espace`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE}/outils/calculateur-mobile-money`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/outils/comparer`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/recherche`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
-    { url: `${BASE}/actualites`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/actualites`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
+    { url: `${BASE}/annuaire`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE}/a-propos`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
-    { url: `${BASE}/methodologie`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${BASE}/methodologie`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${BASE}/confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ]
@@ -52,6 +57,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
+  // Guides SEO
+  const guideRoutes: MetadataRoute.Sitemap = [
+    { url: `${BASE}/telecom/guides/meilleur-forfait-mobile`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/mobile-money/guides/frais-transfert`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/mobile-money/guides/comment-envoyer-argent`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/banques/guides/ouvrir-compte`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/fai/guides/meilleure-box-internet`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+  ]
+
   // Articles
   const articleRoutes: MetadataRoute.Sitemap = ARTICLES.filter((a) => a.isPublished).map((a) => ({
     url: `${BASE}/actualites/${a.slug}`,
@@ -60,5 +74,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...verticalRoutes, ...providerRoutes, ...offerRoutes, ...articleRoutes]
+  return [...staticRoutes, ...verticalRoutes, ...providerRoutes, ...offerRoutes, ...guideRoutes, ...articleRoutes]
 }

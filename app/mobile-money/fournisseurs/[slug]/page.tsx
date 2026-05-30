@@ -4,8 +4,10 @@ import Link from "next/link"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
+import ProviderMeta from "@/components/ui/ProviderMeta"
+import Breadcrumb from "@/components/ui/Breadcrumb"
 import { CheckCircle } from "lucide-react"
-import { buildJsonLd, breadcrumbSchema, organizationSchema } from "@/lib/schema"
+import { buildJsonLd, breadcrumbSchema, providerRatingSchema } from "@/lib/schema"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -31,11 +33,14 @@ export default async function MobileMoneyProviderPage({ params }: Props) {
   const offers = OFFERS.filter((o) => o.providerSlug === provider.slug)
   const isSoutra = provider.slug === "soutra-money"
 
-  const jsonLdOrg = organizationSchema({
+  const jsonLdRating = providerRatingSchema({
     name: provider.name,
     description: provider.description,
     url: `/mobile-money/fournisseurs/${provider.slug}/`,
     website: provider.website,
+    hpScore: provider.hpScore,
+    hpScoreNum: provider.hpScoreNum,
+    vertical: "Mobile Money",
   })
   const jsonLdBreadcrumb = breadcrumbSchema([
     { name: "Accueil", href: "/" },
@@ -46,7 +51,7 @@ export default async function MobileMoneyProviderPage({ params }: Props) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdOrg) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdRating) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdBreadcrumb) }} />
       <section
         className="py-10"
@@ -55,15 +60,14 @@ export default async function MobileMoneyProviderPage({ params }: Props) {
         }}
       >
         <div className="container">
-          <nav className="text-sm mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
-            <Link href="/" className="hover:text-white">Accueil</Link>
-            <span className="mx-2">/</span>
-            <Link href="/mobile-money/" className="hover:text-white">Mobile Money</Link>
-            <span className="mx-2">/</span>
-            <Link href="/mobile-money/fournisseurs/" className="hover:text-white">Services</Link>
-            <span className="mx-2">/</span>
-            <span className="text-white">{provider.name}</span>
-          </nav>
+          <Breadcrumb
+            className="mb-4"
+            items={[
+              { label: "Mobile Money", href: "/mobile-money/" },
+              { label: "Services", href: "/mobile-money/fournisseurs/" },
+              { label: provider.name },
+            ]}
+          />
 
           <div className="flex items-start gap-6">
             <div
@@ -113,6 +117,11 @@ export default async function MobileMoneyProviderPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Meta : auteur + date MAJ */}
+      <div className="container py-4">
+        <ProviderMeta verticalSlug="mobile-money" updatedAt={new Date()} verified={provider.verified} />
+      </div>
 
       <section className="py-10">
         <div className="container">

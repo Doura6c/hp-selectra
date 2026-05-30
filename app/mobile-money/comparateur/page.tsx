@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
-import RankedProviderCard from "@/components/compare/RankedProviderCard"
-import { breadcrumbSchema, buildJsonLd } from "@/lib/schema"
+import ProviderFilters from "@/components/compare/ProviderFilters"
+import { breadcrumbSchema, faqSchema, buildJsonLd } from "@/lib/schema"
 import { Phone, MessageCircle, ChevronRight } from "lucide-react"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
@@ -25,14 +25,21 @@ const USAGES = [
 ]
 
 export default function MobileMoneyComparateurPage() {
-  const jsonLd = buildJsonLd(breadcrumbSchema([
+  const jsonLdBreadcrumb = buildJsonLd(breadcrumbSchema([
     { name: "Accueil", href: "/" },
     { name: "Mobile Money", href: "/mobile-money/" },
     { name: "Comparateur" },
   ]))
+  const jsonLdFaq = buildJsonLd(faqSchema([
+    { question: "Quel est le mobile money le moins cher en Guinée ?", answer: "Soutra Money est le moins cher : dépôts et retraits gratuits + transfert à 1 %. C'est le tarif le plus bas du marché guinéen, lancé en avril 2025 par Digital Pay / Groupe LANALA, agréé BCRG." },
+    { question: "Comment envoyer de l'argent de la France vers la Guinée ?", answer: "Orange Money propose un service de transfert international depuis la France. Des plateformes comme Wave et WorldRemit sont également disponibles. Nos conseillers HP Selectra peuvent vous guider sur les meilleurs taux." },
+    { question: "Soutra Money est-il fiable ?", answer: "Soutra Money est opéré par Digital Pay SA, filiale du Groupe LANALA, acteur reconnu en Guinée. Le service est agréé par la BCRG (Banque Centrale de la République de Guinée)." },
+    { question: "Peut-on utiliser Orange Money sans être client Orange ?", answer: "Non, Orange Money est lié à un numéro Orange Guinée. Pour Soutra Money, l'application fonctionne indépendamment de l'opérateur mobile, ce qui est un avantage notable." },
+  ]))
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdBreadcrumb }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdFaq }} />
 
       {/* Hero */}
       <section className="relative overflow-hidden py-14 sm:py-20"
@@ -151,24 +158,25 @@ export default function MobileMoneyComparateurPage() {
           </div>
         </div>
 
-        {/* Classement */}
+        {/* Classement avec filtres dynamiques */}
         <section id="classement" className="mb-16">
           <h2 className="text-2xl sm:text-3xl font-extrabold mb-2" style={{ color: "var(--color-text)" }}>
             🏆 Classement des services mobile money en Guinée
           </h2>
-          <p className="text-sm mb-8" style={{ color: "var(--color-muted)" }}>
+          <p className="text-sm mb-6" style={{ color: "var(--color-muted)" }}>
             {PROVIDERS_MM.length} services analysés · HP Score : frais, réseau d'agents, fonctionnalités.
           </p>
-          <div className="space-y-6">
-            {PROVIDERS_MM.map((p, i) => {
-              const offers = OFFERS.filter((o) => o.providerSlug === p.slug && o.verticalSlug === "mobile-money")
-                .sort((a, b) => b.hpScoreNum - a.hpScoreNum)
-              return (
-                <RankedProviderCard key={p.slug} provider={p} rank={i + 1}
-                  verticalSlug="mobile-money" topOffers={offers} isRecommended={i === 0} />
-              )
-            })}
-          </div>
+          <ProviderFilters
+            providers={PROVIDERS_MM}
+            offersByProvider={Object.fromEntries(
+              PROVIDERS_MM.map((p) => [
+                p.slug,
+                OFFERS.filter((o) => o.providerSlug === p.slug && o.verticalSlug === "mobile-money")
+                  .sort((a, b) => b.hpScoreNum - a.hpScoreNum),
+              ])
+            )}
+            verticalSlug="mobile-money"
+          />
         </section>
 
         {/* Tableau frais */}

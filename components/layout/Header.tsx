@@ -43,6 +43,7 @@ const NAV_ITEMS = [
   { label: "Annuaire", href: "/annuaire/" },
   { label: "Assurances", href: "/assurances/", soon: true },
   { label: "Actualités", href: "/actualites/" },
+  { label: "Notre équipe", href: "/equipe/" },
 ]
 
 export default function Header() {
@@ -121,6 +122,13 @@ export default function Header() {
 
           {/* CTA desktop */}
           <div className="hidden lg:flex items-center gap-2">
+            <Link
+              href="/mon-espace/"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Mon espace
+            </Link>
             <a
               href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224000000000"}?text=${encodeURIComponent("Bonjour, je suis sur HP Selectra et j'aimerais être conseillé par un expert Help'me Process.")}`}
               target="_blank"

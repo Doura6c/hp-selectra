@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
-import RankedProviderCard from "@/components/compare/RankedProviderCard"
-import { breadcrumbSchema, buildJsonLd } from "@/lib/schema"
+import ProviderFilters from "@/components/compare/ProviderFilters"
+import { breadcrumbSchema, faqSchema, buildJsonLd } from "@/lib/schema"
 import { Phone, MessageCircle, ChevronRight } from "lucide-react"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
@@ -25,15 +25,22 @@ const PROFILES = [
 ]
 
 export default function BanquesComparateurPage() {
-  const jsonLd = buildJsonLd(breadcrumbSchema([
+  const jsonLdBreadcrumb = buildJsonLd(breadcrumbSchema([
     { name: "Accueil", href: "/" },
     { name: "Banques", href: "/banques/" },
     { name: "Comparateur" },
   ]))
+  const jsonLdFaq = buildJsonLd(faqSchema([
+    { question: "Quelle est la meilleure banque en Guinée en 2026 ?", answer: "Selon notre HP Score, Ecobank Guinée (A / 84/100) domine grâce à son app mobile, ses 20 agences à Conakry et sa carte Visa internationale. Pour les PME, Orabank est souvent plus adaptée." },
+    { question: "Comment ouvrir un compte bancaire en Guinée ?", answer: "Rendez-vous en agence avec : CNI ou passeport, justificatif de domicile, 2 photos d'identité et le dépôt minimum requis. Nos conseillers Help'me Process vous accompagnent gratuitement." },
+    { question: "Y a-t-il des banques sans frais en Guinée ?", answer: "La plupart des banques guinéennes appliquent des frais de tenue de compte. Pour minimiser les frais, Soutra Money propose un portefeuille mobile avec dépôts et retraits 100 % gratuits." },
+    { question: "Comment est calculé le HP Score pour les banques ?", answer: "Le HP Score (A à E, /100) prend en compte : tarifs et frais, services digitaux, réseau d'agences et d'ATM, qualité du service client, gamme de produits et conformité BCRG en Guinée." },
+  ]))
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdBreadcrumb }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdFaq }} />
 
       {/* Hero */}
       <section className="relative overflow-hidden py-14 sm:py-20"
@@ -140,24 +147,25 @@ export default function BanquesComparateurPage() {
           </div>
         </div>
 
-        {/* Classement */}
+        {/* Classement avec filtres dynamiques */}
         <section id="classement" className="mb-16">
           <h2 className="text-2xl sm:text-3xl font-extrabold mb-2" style={{ color: "var(--color-text)" }}>
             🏆 Classement des meilleures banques guinéennes
           </h2>
-          <p className="text-sm mb-8" style={{ color: "var(--color-muted)" }}>
+          <p className="text-sm mb-6" style={{ color: "var(--color-muted)" }}>
             {BANKS.length} banques notées · HP Score indépendant · Tarifs, digital, réseau, services.
           </p>
-          <div className="space-y-6">
-            {BANKS.map((bank, i) => {
-              const offers = OFFERS.filter((o) => o.providerSlug === bank.slug && o.verticalSlug === "banques")
-                .sort((a, b) => b.hpScoreNum - a.hpScoreNum)
-              return (
-                <RankedProviderCard key={bank.slug} provider={bank} rank={i + 1}
-                  verticalSlug="banques" topOffers={offers} isRecommended={i === 0} />
-              )
-            })}
-          </div>
+          <ProviderFilters
+            providers={BANKS}
+            offersByProvider={Object.fromEntries(
+              BANKS.map((bank) => [
+                bank.slug,
+                OFFERS.filter((o) => o.providerSlug === bank.slug && o.verticalSlug === "banques")
+                  .sort((a, b) => b.hpScoreNum - a.hpScoreNum),
+              ])
+            )}
+            verticalSlug="banques"
+          />
         </section>
 
         {/* Tableau comparatif */}

@@ -5,8 +5,10 @@ import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
 import PriceTag from "@/components/ui/PriceTag"
+import ProviderMeta from "@/components/ui/ProviderMeta"
+import Breadcrumb from "@/components/ui/Breadcrumb"
 import { Phone, Globe, CheckCircle } from "lucide-react"
-import { buildJsonLd, breadcrumbSchema, organizationSchema } from "@/lib/schema"
+import { buildJsonLd, breadcrumbSchema, providerRatingSchema } from "@/lib/schema"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -31,11 +33,14 @@ export default async function TelecomProviderPage({ params }: Props) {
 
   const offers = OFFERS.filter((o) => o.providerSlug === provider.slug && o.verticalSlug === "telecom")
 
-  const jsonLdOrg = organizationSchema({
+  const jsonLdRating = providerRatingSchema({
     name: provider.name,
     description: provider.description,
     url: `/telecom/fournisseurs/${provider.slug}/`,
     website: provider.website,
+    hpScore: provider.hpScore,
+    hpScoreNum: provider.hpScoreNum,
+    vertical: "Télécom",
   })
   const jsonLdBreadcrumb = breadcrumbSchema([
     { name: "Accueil", href: "/" },
@@ -46,7 +51,7 @@ export default async function TelecomProviderPage({ params }: Props) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdOrg) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdRating) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdBreadcrumb) }} />
       {/* Header fournisseur */}
       <section
@@ -54,15 +59,14 @@ export default async function TelecomProviderPage({ params }: Props) {
         style={{ background: `linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))` }}
       >
         <div className="container">
-          <nav className="text-sm mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
-            <Link href="/" className="hover:text-white">Accueil</Link>
-            <span className="mx-2">/</span>
-            <Link href="/telecom/" className="hover:text-white">Télécom</Link>
-            <span className="mx-2">/</span>
-            <Link href="/telecom/fournisseurs/" className="hover:text-white">Opérateurs</Link>
-            <span className="mx-2">/</span>
-            <span className="text-white">{provider.name}</span>
-          </nav>
+          <Breadcrumb
+            className="mb-4"
+            items={[
+              { label: "Internet & Mobile", href: "/telecom/" },
+              { label: "Opérateurs", href: "/telecom/fournisseurs/" },
+              { label: provider.name },
+            ]}
+          />
 
           <div className="flex items-start gap-6">
             {/* Logo placeholder */}
@@ -99,6 +103,11 @@ export default async function TelecomProviderPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Meta : auteur + date MAJ */}
+      <div className="container py-4">
+        <ProviderMeta verticalSlug="telecom" updatedAt={new Date()} verified={provider.verified} />
+      </div>
 
       {/* Offres */}
       <section className="py-10">

@@ -11,6 +11,8 @@ const FOOTER_LINKS = {
   ],
   Outils: [
     { label: "Annuaire des entreprises", href: "/annuaire/" },
+    { label: "Calculateur Mobile Money", href: "/outils/calculateur-mobile-money/" },
+    { label: "Comparateur côte à côte", href: "/outils/comparer/" },
     { label: "Comparateur internet", href: "/fai/comparateur/" },
     { label: "Comparateur banques", href: "/banques/comparateur/" },
     { label: "Recherche toutes offres", href: "/recherche" },
@@ -18,6 +20,7 @@ const FOOTER_LINKS = {
   ],
   "HP Selectra": [
     { label: "À propos", href: "/a-propos/" },
+    { label: "Notre équipe d'experts", href: "/equipe/" },
     { label: "Méthodologie HP Score", href: "/methodologie/" },
     { label: "Actualités", href: "/actualites/" },
     { label: "Contact", href: "/contact/" },
