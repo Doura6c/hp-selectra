@@ -4,6 +4,7 @@ import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import ProviderFilters from "@/components/compare/ProviderFilters"
 import { breadcrumbSchema, faqSchema, buildJsonLd } from "@/lib/schema"
 import { Phone, MessageCircle, ChevronRight } from "lucide-react"
+import ReviewsSection from "@/components/ui/ReviewsSection"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
 const CC_PHONE  = process.env.NEXT_PUBLIC_CC_PHONE        ?? "224628935335"
@@ -353,6 +354,8 @@ export default function MicrofinanceComparateurPage() {
           </div>
         </div>
       </div>
+
+      <ReviewsSection />
     </>
   )
 }

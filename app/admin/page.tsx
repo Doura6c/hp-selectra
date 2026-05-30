@@ -16,7 +16,7 @@ const MODULES = [
     icon: Users,
     title: "Fournisseurs",
     desc: "Ajouter, modifier, vérifier les opérateurs et prestataires",
-    count: "21 actifs",
+    count: "30 actifs",
     color: "var(--color-primary)",
   },
   {
@@ -24,7 +24,7 @@ const MODULES = [
     icon: Tag,
     title: "Offres & Tarifs",
     desc: "Mettre à jour les tarifs, activer/désactiver des offres",
-    count: "46 offres",
+    count: "63 offres",
     color: "var(--color-secondary)",
   },
   {

@@ -46,6 +46,7 @@ const NAV_ITEMS = [
     href: "/assurances/",
     sub: [
       { label: "Comparateur assurances", href: "/assurances/comparateur/" },
+      { label: "Meilleure assurance", href: "/assurances/meilleur-assurance/" },
       { label: "Toutes les compagnies", href: "/assurances/fournisseurs/" },
       { label: "Guide : choisir son assurance", href: "/assurances/guides/choisir-assurance/" },
     ],
@@ -55,6 +56,7 @@ const NAV_ITEMS = [
     href: "/microfinance/",
     sub: [
       { label: "Comparer les offres", href: "/microfinance/comparateur/" },
+      { label: "Meilleur micro-crédit", href: "/microfinance/meilleur-microcredit/" },
       { label: "Toutes les institutions", href: "/microfinance/fournisseurs/" },
       { label: "Guide : obtenir un micro-crédit", href: "/microfinance/guides/obtenir-microcredit/" },
     ],

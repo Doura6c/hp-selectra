@@ -85,7 +85,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/banques/meilleur-compte`, lastModified: now, changeFrequency: "monthly", priority: 0.88 },
     { url: `${BASE}/fai/guides/meilleure-box-internet`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/assurances/guides/choisir-assurance`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/assurances/meilleur-assurance`, lastModified: now, changeFrequency: "monthly", priority: 0.88 },
     { url: `${BASE}/microfinance/guides/obtenir-microcredit`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/microfinance/meilleur-microcredit`, lastModified: now, changeFrequency: "monthly", priority: 0.88 },
   ]
 
   // Articles
