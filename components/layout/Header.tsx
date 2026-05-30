@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { Menu, X, Phone, ChevronDown } from "lucide-react"
 
 const NAV_ITEMS = [
@@ -50,7 +49,6 @@ const NAV_ITEMS = [
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [openDrop, setOpenDrop] = useState<string | null>(null)
-  const pathname = usePathname()
 
   return (
     <header
@@ -59,13 +57,11 @@ export default function Header() {
     >
       <div className="container">
         <div className="flex items-center justify-between h-16">
-          {/* Logo — scrolle en haut si déjà sur la homepage */}
+          {/* Logo — navigue vers / ET scrolle toujours en haut */}
           <Link
             href="/"
             className="flex items-center gap-2 shrink-0"
-            onClick={() => {
-              if (pathname === "/") window.scrollTo({ top: 0, behavior: "smooth" })
-            }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <span className="text-white font-bold text-xl tracking-tight">
               HP<span style={{ color: "var(--color-accent)" }}>·</span>Selectra
