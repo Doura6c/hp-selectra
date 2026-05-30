@@ -32,7 +32,7 @@ const HERO_COMPARISONS = [
     href: "/banques/comparateur/",
     items: [
       { name: "Ecobank",   score: "A", detail: "App mobile",   price: "Meilleure app", color: "#2D3E8C", winner: true },
-      { name: "BICIGUI",   score: "B", detail: "Réseau dense", price: "BNP Paribas",   color: "#003087" },
+      { name: "Vista Bank", score: "B", detail: "Réseau dense", price: "ex-BICIGUI",    color: "#003087" },
       { name: "Orabank",   score: "B", detail: "20 agences",   price: "Oragroup",      color: "#E30613" },
     ],
   },
@@ -45,7 +45,7 @@ const TICKER_ITEMS = [
   { name: "Ecobank",         color: "#2D3E8C", init: "EC" },
   { name: "Telecel Guinée",  color: "#E30613", init: "TG" },
   { name: "MTN MoMo",        color: "#FFCC00", init: "MT" },
-  { name: "BICIGUI",         color: "#003087", init: "BI" },
+  { name: "Vista Bank",       color: "#003087", init: "VB" },
   { name: "Orange Money",    color: "#FF6600", init: "OM" },
   { name: "Orabank",         color: "#E30613", init: "OR" },
   { name: "UBA Guinée",      color: "#B02840", init: "UB" },
@@ -125,7 +125,7 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-base sm:text-lg mb-8 max-w-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.72)" }}>
-              Forfaits mobiles, mobile money, banques, internet — 21 opérateurs guinéens
+              Forfaits mobiles, mobile money, banques, internet — 30 opérateurs guinéens
               analysés et notés. Comparaison <strong className="text-white">100 % gratuite</strong>.
             </p>
 
@@ -178,7 +178,7 @@ export default function HeroSection() {
 
             {/* Trust pills */}
             <div className="flex flex-wrap gap-2">
-              {["✅ 21 opérateurs", "📊 46 offres", "🔒 Indépendant", "🇬🇳 100 % gratuit"].map((pill) => (
+              {["✅ 30 opérateurs", "📊 63 offres", "🔒 Indépendant", "🇬🇳 100 % gratuit"].map((pill) => (
                 <span
                   key={pill}
                   className="text-xs px-3 py-1.5 rounded-full font-medium"
