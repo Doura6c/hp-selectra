@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { buildJsonLd, webSiteSchema } from "@/lib/schema"
 import HeroSection from "@/components/home/HeroSection"
+import StatsBar from "@/components/home/StatsBar"
 import VerticalCards from "@/components/home/VerticalCards"
 import HowItWorks from "@/components/home/HowItWorks"
 import AdvisorsSection from "@/components/home/AdvisorsSection"
@@ -22,6 +23,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: buildJsonLd(webSiteSchema()) }}
       />
       <HeroSection />
+      <StatsBar />
       <Reveal><VerticalCards /></Reveal>
       <Reveal><HowItWorks /></Reveal>
       <Reveal><AdvisorsSection /></Reveal>
