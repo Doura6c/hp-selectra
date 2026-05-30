@@ -150,7 +150,7 @@ export default function TelecomComparateurPage() {
               >
                 <span
                   className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                  style={{ backgroundColor: "var(--color-primary)" }}
+                  style={{ backgroundColor: p.brandColor ?? "var(--color-primary)" }}
                 >
                   {p.name.slice(0, 2).toUpperCase()}
                 </span>

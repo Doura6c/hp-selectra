@@ -18,10 +18,10 @@ export default function ProviderCard({ provider, verticalSlug, offerCount }: Pro
         borderColor: provider.sponsoredTier !== "free" ? "var(--color-accent)" : "var(--color-border)",
       }}
     >
-      {/* Logo placeholder */}
+      {/* Logo / monogramme */}
       <div
         className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold text-white shrink-0"
-        style={{ backgroundColor: "var(--color-primary)" }}
+        style={{ backgroundColor: provider.brandColor ?? "var(--color-primary)" }}
       >
         {provider.name.slice(0, 2).toUpperCase()}
       </div>

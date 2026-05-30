@@ -19,6 +19,8 @@ export type ProviderData = {
   sponsoredTier: string
   phone?: string
   website?: string
+  brandColor?: string   // couleur principale de la marque (#hex)
+  logo?: string         // chemin /public/logos/{slug}.svg ou .png
 }
 
 export type OfferData = {
@@ -105,6 +107,7 @@ export const PROVIDERS: ProviderData[] = [
     verified: true,
     sponsoredTier: "free",
     website: "https://orange.gn",
+    brandColor: "#FF6600",
   },
   {
     slug: "telecel-guinee",
@@ -115,6 +118,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 72,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#E30613",
   },
   {
     slug: "cellcom-guinee",
@@ -125,6 +129,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 58,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#0070C0",
   },
   {
     slug: "guinee-telecoms",
@@ -135,6 +140,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 55,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#003087",
   },
   {
     slug: "vdc-skyvision",
@@ -145,6 +151,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 52,
     verified: false,
     sponsoredTier: "free",
+    brandColor: "#005BAA",
   },
   // ── Mobile Money ──
   {
@@ -156,6 +163,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 75,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#FF6600",
   },
   {
     slug: "mtn-momo",
@@ -166,6 +174,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 62,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#FFCC00",
   },
   {
     slug: "soutra-money",
@@ -177,6 +186,7 @@ export const PROVIDERS: ProviderData[] = [
     verified: true,
     sponsoredTier: "gold",
     website: "https://soutramoney.com",
+    brandColor: "#6B8F3C",
   },
   {
     slug: "paycard-guinee",
@@ -187,6 +197,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 57,
     verified: false,
     sponsoredTier: "free",
+    brandColor: "#2D3E8C",
   },
   // ── Banques ──
   {
@@ -199,6 +210,7 @@ export const PROVIDERS: ProviderData[] = [
     verified: true,
     sponsoredTier: "free",
     website: "https://ecobank.com",
+    brandColor: "#2D3E8C",
   },
   {
     slug: "bicigui",
@@ -209,6 +221,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 75,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#003087",
   },
   {
     slug: "orabank-guinee",
@@ -219,6 +232,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 72,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#E30613",
   },
   {
     slug: "uba-guinee",
@@ -229,6 +243,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 70,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#B02840",
   },
   {
     slug: "vista-bank-guinee",
@@ -239,6 +254,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 64,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#0070C0",
   },
   {
     slug: "banque-islamique-guinee",
@@ -249,6 +265,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 60,
     verified: true,
     sponsoredTier: "free",
+    brandColor: "#2D7A4F",
   },
 ]
 

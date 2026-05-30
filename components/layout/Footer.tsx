@@ -12,9 +12,9 @@ const FOOTER_LINKS = {
   Outils: [
     { label: "Comparateur forfaits", href: "/telecom/comparateur/" },
     { label: "Comparateur mobile money", href: "/mobile-money/comparateur/" },
-    { label: "Test d'éligibilité", href: "/outils/test-eligibilite/" },
-    { label: "Carte de couverture", href: "/outils/carte-couverture/" },
-    { label: "Simulateur de besoin", href: "/outils/simulateur/" },
+    { label: "Comparateur banques", href: "/banques/comparateur/" },
+    { label: "Recherche toutes offres", href: "/recherche" },
+    { label: "Conseiller gratuit", href: "/contact/" },
   ],
   "HP Selectra": [
     { label: "À propos", href: "/a-propos/" },

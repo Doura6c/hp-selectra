@@ -3,7 +3,8 @@ import { PROVIDERS, OFFERS, VERTICALS } from "@/lib/data/seed-data"
 import type { OfferData, ProviderData } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
-import { Phone, Globe, CheckCircle, ArrowLeft } from "lucide-react"
+import CallbackButton from "@/components/compare/CallbackButton"
+import { Globe, CheckCircle, ArrowLeft } from "lucide-react"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224000000000"
 
@@ -115,13 +116,11 @@ export default function OfferDetail({ offer, provider, verticalSlug }: Props) {
                   </svg>
                   Être conseillé (gratuit)
                 </a>
-                <Link
-                  href="/contact/"
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold border transition-colors hover:bg-surface"
-                  style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}
-                >
-                  <Phone className="w-4 h-4" /> Demander un rappel
-                </Link>
+                <CallbackButton
+                  offerName={offer.name}
+                  providerName={provider.name}
+                  verticalSlug={verticalSlug}
+                />
               </div>
             </div>
           </div>
