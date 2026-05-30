@@ -5,6 +5,7 @@ import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
 import CallbackButton from "@/components/compare/CallbackButton"
 import { Globe, CheckCircle, ArrowLeft } from "lucide-react"
+import { buildJsonLd, breadcrumbSchema, productSchema } from "@/lib/schema"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224000000000"
 
@@ -20,8 +21,32 @@ export default function OfferDetail({ offer, provider, verticalSlug }: Props) {
     (o) => o.verticalSlug === verticalSlug && o.providerSlug === provider.slug && o.slug !== offer.slug
   ).slice(0, 3)
 
+  const jsonLdProduct = productSchema({
+    name: offer.name,
+    description: offer.description,
+    brandName: provider.name,
+    priceNote: offer.priceNote,
+    url: `/${verticalSlug}/offres/${offer.slug}/`,
+    verticalName: vertical?.name ?? verticalSlug,
+  })
+
+  const jsonLdBreadcrumb = breadcrumbSchema([
+    { name: "Accueil", href: "/" },
+    { name: vertical?.name ?? verticalSlug, href: `/${verticalSlug}/` },
+    { name: "Comparateur", href: `/${verticalSlug}/comparateur/` },
+    { name: offer.name },
+  ])
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdProduct) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdBreadcrumb) }}
+      />
       {/* En-tête offre */}
       <section
         className="relative overflow-hidden"

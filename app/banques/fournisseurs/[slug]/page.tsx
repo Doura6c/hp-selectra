@@ -6,6 +6,7 @@ import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
 import PriceTag from "@/components/ui/PriceTag"
 import { Phone, Globe, CheckCircle } from "lucide-react"
+import { buildJsonLd, breadcrumbSchema, organizationSchema } from "@/lib/schema"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -30,8 +31,23 @@ export default async function BanqueProviderPage({ params }: Props) {
 
   const offers = OFFERS.filter((o) => o.providerSlug === provider.slug && o.verticalSlug === "banques")
 
+  const jsonLdOrg = organizationSchema({
+    name: provider.name,
+    description: provider.description,
+    url: `/banques/fournisseurs/${provider.slug}/`,
+    website: provider.website,
+  })
+  const jsonLdBreadcrumb = breadcrumbSchema([
+    { name: "Accueil", href: "/" },
+    { name: "Banques", href: "/banques/" },
+    { name: "Toutes les banques", href: "/banques/fournisseurs/" },
+    { name: provider.name },
+  ])
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdOrg) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdBreadcrumb) }} />
       {/* Header fournisseur */}
       <section
         className="py-10"

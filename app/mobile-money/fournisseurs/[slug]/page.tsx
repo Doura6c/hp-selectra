@@ -5,6 +5,7 @@ import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
 import { CheckCircle } from "lucide-react"
+import { buildJsonLd, breadcrumbSchema, organizationSchema } from "@/lib/schema"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -30,8 +31,23 @@ export default async function MobileMoneyProviderPage({ params }: Props) {
   const offers = OFFERS.filter((o) => o.providerSlug === provider.slug)
   const isSoutra = provider.slug === "soutra-money"
 
+  const jsonLdOrg = organizationSchema({
+    name: provider.name,
+    description: provider.description,
+    url: `/mobile-money/fournisseurs/${provider.slug}/`,
+    website: provider.website,
+  })
+  const jsonLdBreadcrumb = breadcrumbSchema([
+    { name: "Accueil", href: "/" },
+    { name: "Mobile Money", href: "/mobile-money/" },
+    { name: "Services", href: "/mobile-money/fournisseurs/" },
+    { name: provider.name },
+  ])
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdOrg) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdBreadcrumb) }} />
       <section
         className="py-10"
         style={{

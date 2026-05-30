@@ -5,6 +5,7 @@ import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import OfferCard from "@/components/compare/OfferCard"
 import { Globe, CheckCircle, Phone } from "lucide-react"
+import { buildJsonLd, breadcrumbSchema, organizationSchema } from "@/lib/schema"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -40,8 +41,23 @@ export default async function FaiFournisseurPage({ params }: Props) {
 
   const categories = [...new Set(offers.map((o) => o.category))]
 
+  const jsonLdOrg = organizationSchema({
+    name: provider.name,
+    description: provider.description,
+    url: `/fai/fournisseurs/${provider.slug}/`,
+    website: provider.website,
+  })
+  const jsonLdBreadcrumb = breadcrumbSchema([
+    { name: "Accueil", href: "/" },
+    { name: "Internet Fixe", href: "/fai/" },
+    { name: "Fournisseurs", href: "/fai/fournisseurs/" },
+    { name: provider.name },
+  ])
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdOrg) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(jsonLdBreadcrumb) }} />
       {/* Hero */}
       <section
         className="relative overflow-hidden py-12"
