@@ -65,6 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/banques/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/mobile-money/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/assurances/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/microfinance/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
   ]
 
   // Guides SEO
@@ -75,6 +76,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/banques/guides/ouvrir-compte`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/fai/guides/meilleure-box-internet`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/assurances/guides/choisir-assurance`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/microfinance/guides/obtenir-microcredit`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
   ]
 
   // Articles
