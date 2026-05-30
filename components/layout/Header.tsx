@@ -29,6 +29,7 @@ const NAV_ITEMS = [
     sub: [
       { label: "Comparer les comptes", href: "/banques/comparateur/" },
       { label: "Toutes les banques", href: "/banques/fournisseurs/" },
+      { label: "Guide : ouvrir un compte", href: "/banques/guides/ouvrir-compte/" },
     ],
   },
   {
@@ -40,10 +41,36 @@ const NAV_ITEMS = [
       { label: "Tous les fournisseurs", href: "/fai/fournisseurs/" },
     ],
   },
-  { label: "Annuaire", href: "/annuaire/" },
-  { label: "Assurances", href: "/assurances/", soon: true },
+  {
+    label: "Assurances",
+    href: "/assurances/",
+    sub: [
+      { label: "Comparateur assurances", href: "/assurances/comparateur/" },
+      { label: "Toutes les compagnies", href: "/assurances/fournisseurs/" },
+      { label: "Guide : choisir son assurance", href: "/assurances/guides/choisir-assurance/" },
+    ],
+  },
+  {
+    label: "Microfinance",
+    href: "/microfinance/",
+    sub: [
+      { label: "Comparer les offres", href: "/microfinance/comparateur/" },
+      { label: "Toutes les institutions", href: "/microfinance/fournisseurs/" },
+      { label: "Guide : obtenir un micro-crédit", href: "/microfinance/guides/obtenir-microcredit/" },
+    ],
+  },
+  {
+    label: "Villes",
+    href: "/villes/",
+    sub: [
+      { label: "Conakry", href: "/telecom/conakry/" },
+      { label: "Labé", href: "/villes/labe/" },
+      { label: "Kankan", href: "/villes/kankan/" },
+      { label: "N'Zérékoré", href: "/villes/nzerekore/" },
+      { label: "Mamou · Boké · Faranah", href: "/villes/" },
+    ],
+  },
   { label: "Actualités", href: "/actualites/" },
-  { label: "Notre équipe", href: "/equipe/" },
 ]
 
 export default function Header() {
@@ -88,14 +115,6 @@ export default function Header() {
                   className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors"
                 >
                   {item.label}
-                  {item.soon && (
-                    <span
-                      className="text-[10px] font-bold px-1 py-0.5 rounded"
-                      style={{ backgroundColor: "var(--color-accent)", color: "#fff" }}
-                    >
-                      Bientôt
-                    </span>
-                  )}
                   {item.sub && <ChevronDown className="w-3 h-3 opacity-70" />}
                 </Link>
                 {item.sub && openDrop === item.href && (
@@ -190,14 +209,6 @@ export default function Header() {
                 >
                   <span className="flex items-center gap-2">
                     {item.label}
-                    {item.soon && (
-                      <span
-                        className="text-[10px] font-bold px-1 py-0.5 rounded"
-                        style={{ backgroundColor: "var(--color-accent)", color: "#fff" }}
-                      >
-                        Bientôt
-                      </span>
-                    )}
                   </span>
                 </Link>
                 {item.sub && (
