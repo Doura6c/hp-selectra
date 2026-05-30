@@ -21,6 +21,9 @@ export type ProviderData = {
   website?: string
   brandColor?: string   // couleur principale de la marque (#hex)
   logo?: string         // chemin /public/logos/{slug}.svg ou .png
+  tagline?: string      // phrase courte façon Selectra
+  pros?: string[]       // avantages clés (3–5)
+  cons?: string[]       // inconvénients (1–3)
 }
 
 export type OfferData = {
@@ -117,6 +120,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://www.orange-guinee.com/",
     brandColor: "#FF6600",
+    tagline: "Le réseau 4G le plus étendu de Guinée",
+    pros: ["Meilleure couverture 4G nationale", "Pass data flexibles (jour, nuit, semaine)", "App My Orange bien notée", "Orange Money intégré", "SAV disponible 24h"],
+    cons: ["Tarifs légèrement plus élevés", "Couverture rurale variable"],
   },
   {
     slug: "telecel-guinee",
@@ -129,6 +135,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://telecelgroup.com/",
     brandColor: "#E30613",
+    tagline: "Les meilleurs prix data du marché",
+    pros: ["Pass data parmi les moins chers", "Bons pass nuit et weekend", "Réseau en forte expansion", "Offres illimitées compétitives"],
+    cons: ["Couverture hors Conakry à améliorer", "Réseau parfois 3G en zones péri-urbaines"],
   },
   {
     slug: "cellcom-guinee",
@@ -141,6 +150,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "http://www.gn.cellcomgsm.com/",
     brandColor: "#0070C0",
+    tagline: "L'opérateur challenger de Conakry",
+    pros: ["Forfaits très économiques", "Bonne couverture Conakry"],
+    cons: ["Réseau limité hors grandes villes", "Service client à améliorer", "Moins d'offres que la concurrence"],
   },
   {
     slug: "guinee-telecoms",
@@ -177,6 +189,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://www.orange-guinee.com/fr/orange-money.html",
     brandColor: "#FF6600",
+    tagline: "Le réseau d'agents le plus dense de Guinée",
+    pros: ["Plus de 10 000 points de retrait/dépôt", "Transfert France → Guinée disponible", "Paiements marchands, Canal+, EDG", "App Orange Money très utilisée"],
+    cons: ["Frais de transfert 2–3 %", "Retraits payants"],
   },
   {
     slug: "mtn-momo",
@@ -189,6 +204,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://mtn.com.gn/mobile-money",
     brandColor: "#FFCC00",
+    tagline: "Mobile money sur le réseau Telecel Guinée",
+    pros: ["Accessible à tous les abonnés Telecel", "Interface simple (*440#)", "Recharge mobile intégrée"],
+    cons: ["Frais similaires à Orange Money", "Réseau d'agents moins étendu", "Migration MTN → Telecel en cours"],
   },
   {
     slug: "soutra-money",
@@ -201,6 +219,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "gold",
     website: "https://www.soutramoney.com/",
     brandColor: "#6B8F3C",
+    tagline: "Dépôts et retraits GRATUITS — transfert à 1 %",
+    pros: ["Dépôts et retraits 100 % gratuits", "Transfert au taux le plus bas (1 %)", "Paiement facture EDG intégré", "Application moderne et intuitive", "Carte Visa prépayée disponible"],
+    cons: ["Réseau d'agents en construction (lancé avril 2025)", "Nouveau service : historique limité"],
   },
   {
     slug: "paycard-guinee",
@@ -212,6 +233,9 @@ export const PROVIDERS: ProviderData[] = [
     verified: false,
     sponsoredTier: "free",
     brandColor: "#2D3E8C",
+    tagline: "Cartes prépayées interbancaires",
+    pros: ["Acceptée chez les marchands Conakry", "Recharge facile"],
+    cons: ["Réseau d'acceptation limité", "Peu d'informations publiques"],
   },
   // ── Banques ──
   {
@@ -225,6 +249,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://ecobank.com/gn/personal-banking",
     brandColor: "#2D3E8C",
+    tagline: "La banque digitale numéro 1 en Guinée",
+    pros: ["Application mobile la mieux notée (Ecobank Mobile)", "Carte Visa internationale acceptée partout", "20 agences sur Conakry", "Virements 24h/7j via l'app", "Groupe panafricain solide (36 pays)"],
+    cons: ["Frais de tenue de compte applicables", "Dépôt minimum à l'ouverture requis"],
   },
   {
     slug: "bicigui",
@@ -237,6 +264,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://www.bicigui.org/",
     brandColor: "#003087",
+    tagline: "L'ancienne BICI, partenaire BNP Paribas",
+    pros: ["Réseau d'agences le plus étendu (35+)", "Partenariat BNP Paribas — solide", "Expérience et confiance depuis 1985", "Produits entreprises bien développés"],
+    cons: ["Application mobile basique", "Délais de virements parfois longs"],
   },
   {
     slug: "orabank-guinee",
@@ -249,6 +279,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://www.orabank.net/fr/filiale/guinee",
     brandColor: "#E30613",
+    tagline: "Oragroup — présent dans 12 pays africains",
+    pros: ["Groupe bancaire panafricain reconnu", "Produits PME et grandes entreprises solides", "Cartes Visa et Mastercard disponibles"],
+    cons: ["Moins d'agences à Conakry", "Application mobile à améliorer"],
   },
   {
     slug: "uba-guinee",
@@ -261,6 +294,9 @@ export const PROVIDERS: ProviderData[] = [
     sponsoredTier: "free",
     website: "https://www.ubaguinea.com/",
     brandColor: "#B02840",
+    tagline: "United Bank for Africa — présence dans 20 pays",
+    pros: ["Cartes internationales Visa/Mastercard", "Réseau ATM dans plusieurs quartiers", "Banque internationale reconnue"],
+    cons: ["Frais de services parfois opaques", "Service client à améliorer"],
   },
   {
     slug: "vista-bank-guinee",
@@ -272,6 +308,9 @@ export const PROVIDERS: ProviderData[] = [
     verified: true,
     sponsoredTier: "free",
     brandColor: "#0070C0",
+    tagline: "Ex-BSIC, banque en transformation digitale",
+    pros: ["Inclusion financière et microfinance", "Produits adaptés aux petits revenus"],
+    cons: ["Moins de services digitaux que les leaders", "Réseau d'agences limité"],
   },
   {
     slug: "banque-islamique-guinee",
@@ -283,6 +322,9 @@ export const PROVIDERS: ProviderData[] = [
     verified: true,
     sponsoredTier: "free",
     brandColor: "#2D7A4F",
+    tagline: "La seule banque 100 % halal de Guinée",
+    pros: ["Produits conformes à la finance islamique (sans intérêt)", "Financement Mourabaha et épargne halal", "Idéale pour la clientèle musulmane observante"],
+    cons: ["Offre moins diversifiée que les banques conventionnelles", "Moins d'agences"],
   },
 
   // ── FAI (Internet Fixe) ──

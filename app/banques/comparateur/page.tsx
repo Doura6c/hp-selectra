@@ -1,263 +1,309 @@
-"use client"
-
-import { useState, useRef } from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
-import { OFFERS, PROVIDERS } from "@/lib/data/seed-data"
-import OfferCard from "@/components/compare/OfferCard"
-import { ArrowRight, SlidersHorizontal } from "lucide-react"
+import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
+import RankedProviderCard from "@/components/compare/RankedProviderCard"
+import { breadcrumbSchema, buildJsonLd } from "@/lib/schema"
+import { Phone, MessageCircle, ChevronRight } from "lucide-react"
 
-const CATEGORIES = [
-  { slug: "all", label: "Toutes les offres", icon: "🏦" },
-  { slug: "compte-courant", label: "Compte courant", icon: "💼" },
-  { slug: "carte-bancaire", label: "Carte bancaire", icon: "💳" },
-  { slug: "epargne", label: "Épargne", icon: "🏦" },
-]
+const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
+const CC_PHONE  = process.env.NEXT_PUBLIC_CC_PHONE        ?? "224628935335"
 
-type SortKey = "hp" | "featured"
-
-function ChoiceTile({
-  icon,
-  label,
-  count,
-  active,
-  onClick,
-}: {
-  icon: string
-  label: string
-  count: number
-  active: boolean
-  onClick: () => void
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="relative flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 transition-all hover:shadow-md"
-      style={{
-        borderColor: active ? "var(--color-primary)" : "var(--color-border)",
-        backgroundColor: active ? "var(--color-primary-light)" : "var(--color-card)",
-      }}
-    >
-      {active && (
-        <span
-          className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold"
-          style={{ backgroundColor: "var(--color-primary)" }}
-        >
-          ✓
-        </span>
-      )}
-      <span className="text-2xl">{icon}</span>
-      <span className="text-xs font-semibold text-center leading-tight" style={{ color: "var(--color-text)" }}>
-        {label}
-      </span>
-      <span className="text-[10px]" style={{ color: "var(--color-muted)" }}>
-        {count} offre{count > 1 ? "s" : ""}
-      </span>
-    </button>
-  )
+export const metadata: Metadata = {
+  title: "Meilleures banques en Guinée 2026 — Comparatif & avis | HP Selectra",
+  description:
+    "Comparez les 6 meilleures banques guinéennes : Ecobank, BICIGUI, Orabank, UBA… Classement HP Score indépendant, pros/cons et conseils gratuits.",
 }
 
+const BANKS = PROVIDERS.filter((p) => p.verticalSlug === "banques")
+  .sort((a, b) => b.hpScoreNum - a.hpScoreNum)
+
+const PROFILES = [
+  { icon: "👨‍💼", label: "Salarié & fonctionnaire",  banks: ["Ecobank Guinée", "BICIGUI"],         reason: "Domiciliation salaire facilitée" },
+  { icon: "🏢", label: "Entrepreneur & PME",          banks: ["Orabank Guinée", "Ecobank Guinée"],  reason: "Produits entreprises complets" },
+  { icon: "🎓", label: "Étudiant & jeune actif",      banks: ["UBA Guinée", "Vista Bank Guinée"],   reason: "Ouverture facile, frais réduits" },
+  { icon: "🕌", label: "Finance islamique",            banks: ["Banque Islamique de Guinée"],        reason: "Produits halal (sans intérêt)" },
+]
+
 export default function BanquesComparateurPage() {
-  const [selCategory, setSelCategory] = useState("all")
-  const [launched, setLaunched] = useState(false)
-  const [sort, setSort] = useState<SortKey>("hp")
-  const resultsRef = useRef<HTMLDivElement>(null)
-
-  const banquesProviders = PROVIDERS.filter((p) => p.verticalSlug === "banques")
-  const allBanquesOffers = OFFERS.filter((o) => o.verticalSlug === "banques")
-  const totalBanques = allBanquesOffers.length
-
-  function launch() {
-    setLaunched(true)
-    setTimeout(() => {
-      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-    }, 100)
-  }
-
-  const rawOffers = allBanquesOffers.filter(
-    (o) => selCategory === "all" || o.category === selCategory
-  )
-
-  const sortedOffers = [...rawOffers].sort((a, b) => {
-    if (sort === "featured") return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0)
-    return b.hpScoreNum - a.hpScoreNum
-  })
+  const jsonLd = buildJsonLd(breadcrumbSchema([
+    { name: "Accueil", href: "/" },
+    { name: "Banques", href: "/banques/" },
+    { name: "Comparateur" },
+  ]))
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+
       {/* Hero */}
-      <section
-        className="py-10"
-        style={{ background: `linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))` }}
-      >
-        <div className="container">
-          <nav className="text-sm mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>
+      <section className="relative overflow-hidden py-14 sm:py-20"
+        style={{ background: "linear-gradient(135deg, #1B2E6B 0%, #2D3E8C 100%)" }}>
+        <div className="absolute inset-0 opacity-[0.05]"
+          style={{ backgroundImage: "repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%)", backgroundSize: "24px 24px" }} />
+        <div className="container relative">
+          <nav className="flex items-center gap-1.5 text-xs mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
             <Link href="/" className="hover:text-white">Accueil</Link>
-            <span className="mx-2">/</span>
+            <ChevronRight className="w-3 h-3" />
             <Link href="/banques/" className="hover:text-white">Banques</Link>
-            <span className="mx-2">/</span>
+            <ChevronRight className="w-3 h-3" />
             <span className="text-white">Comparateur</span>
           </nav>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-1">
-            Comparateur banques — Guinée
-          </h1>
-          <p className="text-sm" style={{ color: "rgba(255,255,255,0.75)" }}>
-            {totalBanques} offres comparées · {banquesProviders.length} banques · HP Score indépendant
-          </p>
-        </div>
-      </section>
-
-      {/* Widget sélection */}
-      <section className="py-8" style={{ backgroundColor: "var(--color-primary-light)" }}>
-        <div className="container max-w-2xl">
-          <p className="text-sm font-semibold mb-4 text-center" style={{ color: "var(--color-text)" }}>
-            Que souhaitez-vous comparer ?
-          </p>
-          <div className="grid grid-cols-4 gap-3 mb-6">
-            {CATEGORIES.map((cat) => {
-              const count =
-                cat.slug === "all"
-                  ? allBanquesOffers.length
-                  : allBanquesOffers.filter((o) => o.category === cat.slug).length
-              return (
-                <ChoiceTile
-                  key={cat.slug}
-                  icon={cat.icon}
-                  label={cat.label}
-                  count={count}
-                  active={selCategory === cat.slug}
-                  onClick={() => setSelCategory(cat.slug)}
-                />
-              )
-            })}
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-5"
+                style={{ backgroundColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.9)" }}>
+                🏦 Mis à jour {new Date().toLocaleDateString("fr-GN", { month: "long", year: "numeric" })}
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-4 leading-tight">
+                Meilleures banques<br />en Guinée {new Date().getFullYear()}
+              </h1>
+              <p className="text-base mb-8" style={{ color: "rgba(255,255,255,0.75)" }}>
+                Comparatif indépendant de {BANKS.length} banques guinéennes classées par HP Score.
+                Compte courant, carte Visa, épargne — trouvez la banque idéale pour votre profil.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je cherche la meilleure banque en Guinée. Pouvez-vous m'aider ?")}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold text-white"
+                  style={{ backgroundColor: "#25D366" }}>
+                  <MessageCircle className="w-4 h-4" /> Conseils gratuits
+                </a>
+                <a href={`tel:+${CC_PHONE}`}
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white border border-white/30 hover:bg-white/10">
+                  <Phone className="w-4 h-4" /> Appeler
+                </a>
+              </div>
+            </div>
+            {/* Mini classement */}
+            <div className="rounded-2xl overflow-hidden shadow-2xl hidden lg:block"
+              style={{ backgroundColor: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }}>
+              <div className="px-5 py-3.5 border-b" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+                <p className="text-xs font-bold text-white">🏆 Top banques · HP Score</p>
+              </div>
+              {BANKS.slice(0, 4).map((b, i) => (
+                <div key={b.slug} className="flex items-center gap-4 px-5 py-3.5 border-b last:border-b-0"
+                  style={{ borderColor: "rgba(255,255,255,0.07)", backgroundColor: i === 0 ? "rgba(107,143,60,0.15)" : "transparent" }}>
+                  <span className="text-xs font-extrabold w-5 text-center"
+                    style={{ color: i === 0 ? "#F0A500" : "rgba(255,255,255,0.4)" }}>#{i + 1}</span>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                    style={{ backgroundColor: b.brandColor ?? "#1D3461" }}>
+                    {b.name.slice(0, 2).toUpperCase()}
+                  </div>
+                  <p className="flex-1 text-sm font-semibold text-white truncate">{b.name}</p>
+                  <span className="text-xs font-extrabold px-2 py-1 rounded-full text-white"
+                    style={{ backgroundColor: b.hpScore === "A" ? "#6B8F3C" : b.hpScore === "B" ? "#8FB84E" : "#F0A500" }}>
+                    {b.hpScore}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-          <button
-            onClick={launch}
-            className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-white text-base transition-opacity hover:opacity-90"
-            style={{ backgroundColor: "var(--color-primary)" }}
-          >
-            Lancer la comparaison <ArrowRight className="w-5 h-5" />
-          </button>
         </div>
       </section>
 
-      {/* Mur des banques */}
-      <section className="py-6 border-b" style={{ borderColor: "var(--color-border)" }}>
+      {/* Navigation ancres sticky */}
+      <div className="sticky top-0 z-30 border-b overflow-x-auto"
+        style={{ backgroundColor: "var(--color-card)", borderColor: "var(--color-border)" }}>
         <div className="container">
-          <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: "var(--color-muted)" }}>
-            Banques comparées
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {banquesProviders.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/banques/fournisseurs/${p.slug}/`}
-                className="flex items-center gap-2.5 pl-2 pr-4 py-2 rounded-full border transition-all hover:shadow-md hover:-translate-y-0.5"
-                style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-card)" }}
-              >
-                <span
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                  style={{ backgroundColor: p.brandColor ?? "var(--color-primary)" }}
-                >
-                  {p.name.slice(0, 2).toUpperCase()}
-                </span>
-                <span className="text-sm font-semibold" style={{ color: "var(--color-text)" }}>
-                  {p.name}
-                </span>
-              </Link>
+          <div className="flex items-center min-w-max">
+            {[
+              { label: "🏆 Classement", href: "#classement" },
+              { label: "📊 Tableau", href: "#tableau" },
+              { label: "👤 Par profil", href: "#profils" },
+              { label: "❓ FAQ", href: "#faq" },
+            ].map((a) => (
+              <a key={a.href} href={a.href}
+                className="text-xs font-semibold px-4 py-4 border-b-2 border-transparent hover:border-[var(--color-primary)] transition-colors whitespace-nowrap"
+                style={{ color: "var(--color-text)" }}>
+                {a.label}
+              </a>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Résultats */}
-      <div ref={resultsRef} className="container py-10 scroll-mt-20">
-        {!launched ? (
-          /* Avant lancement — bons plans */
+      <div className="container py-12" style={{ maxWidth: "1000px", marginInline: "auto" }}>
+
+        {/* Verdict */}
+        <div className="flex items-start gap-4 p-6 rounded-2xl border mb-12"
+          style={{ backgroundColor: "#f0f9e0", borderColor: "var(--color-secondary)" }}>
+          <span className="text-3xl shrink-0">💚</span>
           <div>
-            <h2 className="text-lg font-bold mb-5" style={{ color: "var(--color-text)" }}>
-              🏆 Les offres bancaires recommandées
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {allBanquesOffers.filter((o) => o.isFeatured).map((offer) => {
-                const provider = PROVIDERS.find((p) => p.slug === offer.providerSlug)!
-                return (
-                  <OfferCard key={offer.slug} offer={offer} provider={provider} verticalSlug="banques" />
-                )
-              })}
-            </div>
+            <p className="font-extrabold text-base mb-1" style={{ color: "#4e6a2c" }}>
+              Notre sélection HP Selectra — Banques Guinée {new Date().getFullYear()}
+            </p>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--color-text)" }}>
+              <strong>Ecobank Guinée</strong> obtient le meilleur HP Score A (84/100) : application mobile primée, 20 agences Conakry, carte Visa internationale.
+              Pour les PME, <strong>Orabank Guinée</strong> est le choix le plus complet.
+              La <strong>Banque Islamique de Guinée</strong> reste l'unique option conforme à la finance halal.
+            </p>
+          </div>
+        </div>
 
-            {/* Disclaimer */}
-            <div
-              className="flex items-start gap-3 p-4 rounded-xl mt-8 text-sm"
-              style={{ backgroundColor: "var(--color-warning)", color: "#fff" }}
-            >
-              <span className="text-lg shrink-0">⚠️</span>
-              <p>
-                Les frais affichés sont des <strong>données d'exemple indicatives</strong>.
-                Vérifiez toujours les conditions actuelles auprès de la banque avant toute souscription.
-              </p>
+        {/* Classement */}
+        <section id="classement" className="mb-16">
+          <h2 className="text-2xl sm:text-3xl font-extrabold mb-2" style={{ color: "var(--color-text)" }}>
+            🏆 Classement des meilleures banques guinéennes
+          </h2>
+          <p className="text-sm mb-8" style={{ color: "var(--color-muted)" }}>
+            {BANKS.length} banques notées · HP Score indépendant · Tarifs, digital, réseau, services.
+          </p>
+          <div className="space-y-6">
+            {BANKS.map((bank, i) => {
+              const offers = OFFERS.filter((o) => o.providerSlug === bank.slug && o.verticalSlug === "banques")
+                .sort((a, b) => b.hpScoreNum - a.hpScoreNum)
+              return (
+                <RankedProviderCard key={bank.slug} provider={bank} rank={i + 1}
+                  verticalSlug="banques" topOffers={offers} isRecommended={i === 0} />
+              )
+            })}
+          </div>
+        </section>
+
+        {/* Tableau comparatif */}
+        <section id="tableau" className="mb-16">
+          <h2 className="text-2xl font-extrabold mb-6" style={{ color: "var(--color-text)" }}>
+            📊 Tableau comparatif rapide
+          </h2>
+          <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "var(--color-border)" }}>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ backgroundColor: "var(--color-surface)" }}>
+                    {["Banque", "Score", "App mobile", "Carte Visa", "Agences", "Site"].map((h) => (
+                      <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide"
+                        style={{ color: "var(--color-muted)" }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {BANKS.map((bank, i) => (
+                    <tr key={bank.slug}
+                      style={{ backgroundColor: i % 2 === 0 ? "var(--color-card)" : "var(--color-surface)", borderTop: "1px solid var(--color-border)" }}>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                            style={{ backgroundColor: bank.brandColor ?? "var(--color-primary)" }}>
+                            {bank.name.slice(0, 2).toUpperCase()}
+                          </div>
+                          <Link href={`/banques/fournisseurs/${bank.slug}/`}
+                            className="font-semibold hover:underline" style={{ color: "var(--color-text)" }}>
+                            {bank.name}
+                          </Link>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="inline-flex w-7 h-7 items-center justify-center rounded-full font-extrabold text-sm text-white"
+                          style={{ backgroundColor: bank.hpScore === "A" ? "#6B8F3C" : bank.hpScore === "B" ? "#8FB84E" : "#F0A500" }}>
+                          {bank.hpScore}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">{bank.hpScore === "A" ? "✅ Top" : bank.hpScore === "B" ? "✅ Bonne" : "⚠️ Basique"}</td>
+                      <td className="px-4 py-3">{bank.slug === "banque-islamique-guinee" ? "⚠️ Limitée" : "✅ Oui"}</td>
+                      <td className="px-4 py-3" style={{ color: "var(--color-muted)" }}>
+                        {bank.slug === "ecobank-guinee" ? "20" : bank.slug === "bicigui" ? "35+" : bank.slug === "orabank-guinee" ? "8" : bank.slug === "uba-guinee" ? "6" : "4–5"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {bank.website
+                          ? <a href={bank.website} target="_blank" rel="noopener noreferrer"
+                              className="text-xs font-semibold px-2.5 py-1 rounded-lg"
+                              style={{ backgroundColor: "var(--color-primary-light)", color: "var(--color-primary)" }}>
+                              Visiter
+                            </a>
+                          : "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        ) : (
-          /* Après lancement */
-          <div className="animate-hp-fade-up">
-            <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
-              <h2 className="text-lg font-bold" style={{ color: "var(--color-text)" }}>
-                {sortedOffers.length} offre{sortedOffers.length > 1 ? "s" : ""} trouvée
-                {sortedOffers.length > 1 ? "s" : ""}
-                {selCategory !== "all" && (
-                  <span className="ml-2 text-sm font-normal" style={{ color: "var(--color-muted)" }}>
-                    — {CATEGORIES.find((c) => c.slug === selCategory)?.label}
-                  </span>
-                )}
-              </h2>
-              <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4" style={{ color: "var(--color-muted)" }} />
-                <select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value as SortKey)}
-                  className="text-sm rounded-lg px-3 py-1.5 border outline-none"
-                  style={{
-                    borderColor: "var(--color-border)",
-                    color: "var(--color-text)",
-                    backgroundColor: "var(--color-card)",
-                  }}
-                >
-                  <option value="hp">Meilleur HP Score</option>
-                  <option value="featured">Recommandées d'abord</option>
-                </select>
-              </div>
-            </div>
+          <p className="text-xs mt-3" style={{ color: "var(--color-muted)" }}>
+            ⚠️ Données indicatives — confirmez les conditions auprès de chaque banque avant souscription.
+          </p>
+        </section>
 
-            {sortedOffers.length === 0 ? (
-              <p style={{ color: "var(--color-muted)" }}>Aucune offre pour cette sélection.</p>
-            ) : (
-              <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                  {sortedOffers.map((offer) => {
-                    const provider = PROVIDERS.find((p) => p.slug === offer.providerSlug)!
-                    return (
-                      <OfferCard key={offer.slug} offer={offer} provider={provider} verticalSlug="banques" />
-                    )
+        {/* Par profil */}
+        <section id="profils" className="mb-16">
+          <h2 className="text-2xl font-extrabold mb-3" style={{ color: "var(--color-text)" }}>
+            🎯 Quelle banque selon votre profil ?
+          </h2>
+          <p className="text-sm mb-6" style={{ color: "var(--color-muted)" }}>Notre sélection personnalisée pour chaque situation.</p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {PROFILES.map((profile) => (
+              <div key={profile.label} className="p-5 rounded-2xl border"
+                style={{ backgroundColor: "var(--color-card)", borderColor: "var(--color-border)" }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">{profile.icon}</span>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: "var(--color-text)" }}>{profile.label}</p>
+                    <p className="text-xs" style={{ color: "var(--color-muted)" }}>{profile.reason}</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {profile.banks.map((bName) => {
+                    const b = BANKS.find((x) => x.name === bName)
+                    return b ? (
+                      <Link key={bName} href={`/banques/fournisseurs/${b.slug}/`}
+                        className="text-xs font-bold px-3 py-2 rounded-xl text-white"
+                        style={{ backgroundColor: b.brandColor ?? "var(--color-primary)" }}>
+                        {bName}
+                      </Link>
+                    ) : null
                   })}
                 </div>
-
-                {/* Disclaimer après résultats */}
-                <div
-                  className="flex items-start gap-3 p-4 rounded-xl text-sm"
-                  style={{ backgroundColor: "var(--color-warning)", color: "#fff" }}
-                >
-                  <span className="text-lg shrink-0">⚠️</span>
-                  <p>
-                    Les frais affichés sont des <strong>données d'exemple indicatives</strong>.
-                    Confirmez toujours les conditions actuelles auprès de la banque avant toute souscription.
-                    Un conseiller Help&apos;me Process peut vous accompagner gratuitement.
-                  </p>
-                </div>
-              </>
-            )}
+              </div>
+            ))}
           </div>
-        )}
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="mb-16">
+          <h2 className="text-2xl font-extrabold mb-6" style={{ color: "var(--color-text)" }}>❓ Questions fréquentes</h2>
+          <div className="space-y-3">
+            {[
+              { q: "Quelle est la meilleure banque en Guinée en 2026 ?",
+                a: "Selon notre HP Score, Ecobank Guinée (A / 84/100) domine grâce à son app mobile, ses 20 agences Conakry et sa carte Visa internationale. Pour les PME, Orabank est souvent plus adaptée." },
+              { q: "Comment ouvrir un compte bancaire en Guinée ?",
+                a: "Rendez-vous en agence avec : CNI ou passeport, justificatif de domicile, 2 photos d'identité et le dépôt minimum requis. Nos conseillers Help'me Process vous accompagnent gratuitement." },
+              { q: "Y a-t-il des banques sans frais en Guinée ?",
+                a: "La plupart appliquent des frais de tenue de compte. Pour éviter les frais, Soutra Money propose un portefeuille mobile avec dépôts et retraits 100 % gratuits." },
+              { q: "Comment est calculé le HP Score ?",
+                a: "Le HP Score (A à E, /100) prend en compte : tarifs, services digitaux, réseau d'agences, qualité du service client et gamme de produits disponibles en Guinée. La note est attribuée de manière indépendante par HP Selectra." },
+            ].map(({ q, a }) => (
+              <details key={q} className="group rounded-2xl border overflow-hidden" style={{ borderColor: "var(--color-border)" }}>
+                <summary className="flex items-center justify-between px-6 py-4 cursor-pointer list-none font-semibold text-sm"
+                  style={{ backgroundColor: "var(--color-card)", color: "var(--color-text)" }}>
+                  {q}
+                  <span className="ml-3 shrink-0 font-bold text-xl" style={{ color: "var(--color-primary)" }}>+</span>
+                </summary>
+                <div className="px-6 py-4 text-sm leading-relaxed"
+                  style={{ backgroundColor: "var(--color-surface)", color: "var(--color-muted)" }}>{a}</div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA final */}
+        <div className="rounded-2xl p-8 text-center"
+          style={{ background: "linear-gradient(135deg, #1B2E6B 0%, #2D3E8C 100%)" }}>
+          <p className="text-2xl font-extrabold text-white mb-2">Pas encore décidé ?</p>
+          <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.75)" }}>
+            Un conseiller Help'me Process analyse votre profil et vous recommande la banque idéale — gratuitement.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je cherche la meilleure banque en Guinée pour mon profil.")}`}
+              target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white" style={{ backgroundColor: "#25D366" }}>
+              <MessageCircle className="w-4 h-4" /> WhatsApp gratuit
+            </a>
+            <a href={`tel:+${CC_PHONE}`}
+              className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white border border-white/30">
+              <Phone className="w-4 h-4" /> Appeler le conseiller
+            </a>
+          </div>
+        </div>
+
       </div>
     </>
   )

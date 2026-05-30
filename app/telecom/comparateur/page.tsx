@@ -1,299 +1,307 @@
-"use client"
-
-import { useMemo, useRef, useState } from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
-import { OFFERS, PROVIDERS } from "@/lib/data/seed-data"
-import OfferCard from "@/components/compare/OfferCard"
-import { Smartphone, Wifi, ArrowRight, ShieldCheck, Sparkles } from "lucide-react"
+import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
+import RankedProviderCard from "@/components/compare/RankedProviderCard"
+import { breadcrumbSchema, buildJsonLd } from "@/lib/schema"
+import { Phone, MessageCircle, ChevronRight } from "lucide-react"
 
-const MOBILE_CATS = ["forfait-mobile", "pass-data"]
-const INTERNET_CATS = ["internet-fixe"]
+const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
+const CC_PHONE  = process.env.NEXT_PUBLIC_CC_PHONE        ?? "224628935335"
 
-const SORT_OPTIONS = [
-  { value: "score", label: "Meilleur HP Score" },
-  { value: "featured", label: "Recommandées d'abord" },
+export const metadata: Metadata = {
+  title: "Meilleur forfait mobile en Guinée 2026 — Comparatif opérateurs | HP Selectra",
+  description:
+    "Comparez Orange Guinée, Telecel et Cellcom. Classement HP Score indépendant, pass data, couverture réseau et conseils gratuits.",
+}
+
+const TELECOMS = PROVIDERS.filter(
+  (p) => p.verticalSlug === "telecom" && p.slug !== "guinee-telecoms" && p.slug !== "vdc-skyvision"
+).sort((a, b) => b.hpScoreNum - a.hpScoreNum)
+
+const PROFILES = [
+  { icon: "📸", label: "Gros consommateur data",  ops: ["Orange Guinée"],                    reason: "Meilleure couverture 4G nationale" },
+  { icon: "💰", label: "Petit budget",             ops: ["Cellcom Guinée"],                   reason: "Forfaits les plus accessibles" },
+  { icon: "🌙", label: "Usage nocturne/weekend",   ops: ["Telecel Guinée"],                   reason: "Meilleurs pass nuit et weekend" },
+  { icon: "📞", label: "Appels + data illimités",  ops: ["Orange Guinée", "Telecel Guinée"],  reason: "Offres tout-en-un compètes" },
 ]
 
 export default function TelecomComparateurPage() {
-  const [selMobile, setSelMobile] = useState(true)
-  const [selInternet, setSelInternet] = useState(true)
-  const [launched, setLaunched] = useState(false)
-  const [sort, setSort] = useState("score")
-  const resultsRef = useRef<HTMLDivElement>(null)
-
-  const telecomOffers = useMemo(() => OFFERS.filter((o) => o.verticalSlug === "telecom"), [])
-  const telecomProviders = useMemo(
-    () => PROVIDERS.filter((p) => p.verticalSlug === "telecom").sort((a, b) => b.hpScoreNum - a.hpScoreNum),
-    []
-  )
-  const featured = useMemo(() => telecomOffers.filter((o) => o.isFeatured), [telecomOffers])
-
-  const selectedCats = useMemo(() => {
-    const c: string[] = []
-    if (selMobile) c.push(...MOBILE_CATS)
-    if (selInternet) c.push(...INTERNET_CATS)
-    return c
-  }, [selMobile, selInternet])
-
-  const results = useMemo(() => {
-    return telecomOffers
-      .filter((o) => selectedCats.includes(o.category))
-      .sort((a, b) => {
-        if (sort === "featured") return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0)
-        return b.hpScoreNum - a.hpScoreNum
-      })
-  }, [telecomOffers, selectedCats, sort])
-
-  function launch() {
-    setLaunched(true)
-    setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60)
-  }
-
+  const jsonLd = buildJsonLd(breadcrumbSchema([
+    { name: "Accueil", href: "/" },
+    { name: "Télécom", href: "/telecom/" },
+    { name: "Comparateur" },
+  ]))
   return (
     <>
-      {/* Hero comparateur */}
-      <section
-        className="relative overflow-hidden"
-        style={{ background: `linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 60%, var(--color-secondary) 140%)` }}
-      >
-        {/* Décor bulles */}
-        <div className="pointer-events-none absolute inset-0 opacity-20">
-          <div className="absolute -top-10 -left-10 w-64 h-64 rounded-full" style={{ background: "radial-gradient(circle, #fff 0%, transparent 70%)" }} />
-          <div className="absolute top-20 right-10 w-40 h-40 rounded-full" style={{ background: "radial-gradient(circle, var(--color-accent) 0%, transparent 70%)" }} />
-        </div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
 
-        <div className="container relative py-12 sm:py-16">
-          <nav className="text-sm mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
+      {/* Hero */}
+      <section className="relative overflow-hidden py-14 sm:py-20"
+        style={{ background: "linear-gradient(135deg, #1D3461 0%, #c04000 100%)" }}>
+        <div className="absolute inset-0 opacity-[0.05]"
+          style={{ backgroundImage: "repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%)", backgroundSize: "24px 24px" }} />
+        <div className="container relative">
+          <nav className="flex items-center gap-1.5 text-xs mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
             <Link href="/" className="hover:text-white">Accueil</Link>
-            <span className="mx-2">/</span>
-            <Link href="/telecom/" className="hover:text-white">Internet & Mobile</Link>
-            <span className="mx-2">/</span>
+            <ChevronRight className="w-3 h-3" />
+            <Link href="/telecom/" className="hover:text-white">Télécom</Link>
+            <ChevronRight className="w-3 h-3" />
             <span className="text-white">Comparateur</span>
           </nav>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-3 max-w-2xl leading-tight">
-            Comparez les offres internet et mobile en Guinée
-          </h1>
-          <p className="text-base sm:text-lg max-w-xl mb-8" style={{ color: "rgba(255,255,255,0.85)" }}>
-            En quelques secondes, trouvez le forfait, le pass data ou la box la mieux notée par notre HP Score —
-            100 % gratuit et indépendant.
-          </p>
-
-          {/* Widget de sélection */}
-          <div
-            className="rounded-2xl p-4 sm:p-5 shadow-2xl max-w-3xl"
-            style={{ backgroundColor: "var(--color-card)" }}
-          >
-            <p className="text-sm font-semibold mb-3" style={{ color: "var(--color-muted)" }}>
-              Que souhaitez-vous comparer ?
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <ChoiceTile
-                active={selMobile}
-                onToggle={() => setSelMobile((v) => !v)}
-                icon={<Smartphone className="w-5 h-5" />}
-                title="Mobile"
-                subtitle="Forfaits & pass data"
-              />
-              <ChoiceTile
-                active={selInternet}
-                onToggle={() => setSelInternet((v) => !v)}
-                icon={<Wifi className="w-5 h-5" />}
-                title="Internet maison"
-                subtitle="Box & fibre"
-              />
-              <button
-                onClick={launch}
-                disabled={selectedCats.length === 0}
-                className="flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base font-bold text-white transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed sm:ml-auto"
-                style={{ backgroundColor: "var(--color-accent)" }}
-              >
-                Lancer la comparaison
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-            {selectedCats.length === 0 && (
-              <p className="text-xs mt-3" style={{ color: "var(--color-warning)" }}>
-                Sélectionnez au moins une catégorie pour lancer la comparaison.
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-5"
+                style={{ backgroundColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.9)" }}>
+                📱 Mis à jour {new Date().toLocaleDateString("fr-GN", { month: "long", year: "numeric" })}
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-4 leading-tight">
+                Meilleur forfait mobile<br />en Guinée {new Date().getFullYear()}
+              </h1>
+              <p className="text-base mb-8" style={{ color: "rgba(255,255,255,0.75)" }}>
+                Comparatif indépendant — Orange, Telecel, Cellcom.
+                Pass data, appels illimités, couverture 4G : le meilleur forfait pour votre usage.
               </p>
-            )}
-          </div>
-
-          {/* Ligne de confiance */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6 text-sm" style={{ color: "rgba(255,255,255,0.85)" }}>
-            <span className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4" style={{ color: "var(--color-accent)" }} />
-              <strong className="text-white">{telecomOffers.length}</strong> offres comparées
-            </span>
-            <span className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4" style={{ color: "var(--color-accent)" }} />
-              <strong className="text-white">{telecomProviders.length}</strong> opérateurs référencés
-            </span>
-            <span>HP Score indépendant — sans publicité déguisée</span>
+              <div className="flex flex-wrap gap-3">
+                <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je cherche le meilleur forfait mobile en Guinée. Pouvez-vous m'aider ?")}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold text-white"
+                  style={{ backgroundColor: "#25D366" }}>
+                  <MessageCircle className="w-4 h-4" /> Conseils gratuits
+                </a>
+                <a href={`tel:+${CC_PHONE}`}
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white border border-white/30 hover:bg-white/10">
+                  <Phone className="w-4 h-4" /> Appeler
+                </a>
+              </div>
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-2xl hidden lg:block"
+              style={{ backgroundColor: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }}>
+              <div className="px-5 py-3.5 border-b" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+                <p className="text-xs font-bold text-white">📱 Classement · HP Score</p>
+              </div>
+              {TELECOMS.map((op, i) => (
+                <div key={op.slug} className="flex items-center gap-4 px-5 py-3.5 border-b last:border-b-0"
+                  style={{ borderColor: "rgba(255,255,255,0.07)", backgroundColor: i === 0 ? "rgba(255,102,0,0.15)" : "transparent" }}>
+                  <span className="text-xs font-extrabold w-5 text-center"
+                    style={{ color: i === 0 ? "#F0A500" : "rgba(255,255,255,0.4)" }}>#{i + 1}</span>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                    style={{ backgroundColor: op.brandColor ?? "#1D3461" }}>
+                    {op.name.slice(0, 2).toUpperCase()}
+                  </div>
+                  <p className="flex-1 text-sm font-semibold text-white truncate">{op.name}</p>
+                  <span className="text-xs font-extrabold px-2 py-1 rounded-full text-white"
+                    style={{ backgroundColor: op.hpScore === "A" ? "#6B8F3C" : op.hpScore === "B" ? "#8FB84E" : "#F0A500" }}>
+                    {op.hpScore}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Mur des opérateurs */}
-      <section className="py-8 border-b" style={{ borderColor: "var(--color-border)" }}>
+      {/* Ancres sticky */}
+      <div className="sticky top-0 z-30 border-b overflow-x-auto"
+        style={{ backgroundColor: "var(--color-card)", borderColor: "var(--color-border)" }}>
         <div className="container">
-          <p className="text-center text-xs font-medium uppercase tracking-wide mb-5" style={{ color: "var(--color-muted)" }}>
-            Les opérateurs que nous comparons
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {telecomProviders.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/telecom/fournisseurs/${p.slug}/`}
-                className="flex items-center gap-2.5 pl-2 pr-4 py-2 rounded-full border transition-all hover:shadow-md hover:-translate-y-0.5"
-                style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-card)" }}
-              >
-                <span
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                  style={{ backgroundColor: p.brandColor ?? "var(--color-primary)" }}
-                >
-                  {p.name.slice(0, 2).toUpperCase()}
-                </span>
-                <span className="text-sm font-semibold" style={{ color: "var(--color-text)" }}>
-                  {p.name}
-                </span>
-              </Link>
+          <div className="flex items-center min-w-max">
+            {[
+              { label: "🏆 Classement", href: "#classement" },
+              { label: "📊 Offres phares", href: "#offres" },
+              { label: "👤 Par usage", href: "#profils" },
+              { label: "❓ FAQ", href: "#faq" },
+            ].map((a) => (
+              <a key={a.href} href={a.href}
+                className="text-xs font-semibold px-4 py-4 border-b-2 border-transparent hover:border-[var(--color-primary)] transition-colors whitespace-nowrap"
+                style={{ color: "var(--color-text)" }}>
+                {a.label}
+              </a>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Résultats */}
-      <div ref={resultsRef} className="container py-10 scroll-mt-20">
-        {launched ? (
-          <div className="hp-fade-up">
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-              <div>
-                <h2 className="text-2xl font-extrabold" style={{ color: "var(--color-text)" }}>
-                  {results.length} offre{results.length > 1 ? "s" : ""} pour vous
-                </h2>
-                <p className="text-sm" style={{ color: "var(--color-muted)" }}>
-                  {[selMobile && "Mobile", selInternet && "Internet maison"].filter(Boolean).join(" + ")}
-                </p>
-              </div>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-                className="px-3 py-2 rounded-xl text-sm border"
-                style={{ borderColor: "var(--color-border)", color: "var(--color-text)", backgroundColor: "var(--color-card)" }}
-              >
-                {SORT_OPTIONS.map((s) => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
-                ))}
-              </select>
-            </div>
+      <div className="container py-12" style={{ maxWidth: "1000px", marginInline: "auto" }}>
 
-            {/* Disclaimer tarifs */}
-            <div
-              className="flex items-start gap-3 p-4 rounded-xl mb-6 text-sm"
-              style={{ backgroundColor: "var(--color-warning)", color: "#fff" }}
-            >
-              <span className="text-lg shrink-0">⚠️</span>
-              <p>
-                Les tarifs affichés sont des <strong>données d'exemple à titre indicatif</strong>.
-                Vérifiez toujours les prix actuels auprès de l'opérateur avant toute souscription.
-              </p>
-            </div>
-
-            {results.length === 0 ? (
-              <div className="text-center py-16" style={{ color: "var(--color-muted)" }}>
-                Aucune offre ne correspond à votre sélection.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {results.map((offer) => {
-                  const provider = PROVIDERS.find((p) => p.slug === offer.providerSlug)!
-                  return <OfferCard key={offer.slug} offer={offer} provider={provider} verticalSlug="telecom" />
-                })}
-              </div>
-            )}
-          </div>
-        ) : (
-          /* Aperçu avant lancement : les bons plans du mois */
+        {/* Verdict */}
+        <div className="flex items-start gap-4 p-6 rounded-2xl border mb-12"
+          style={{ backgroundColor: "#fff3e0", borderColor: "#FF6600" }}>
+          <span className="text-3xl shrink-0">🟠</span>
           <div>
-            <div className="flex items-center gap-2 mb-6">
-              <Sparkles className="w-5 h-5" style={{ color: "var(--color-accent)" }} />
-              <h2 className="text-2xl font-extrabold" style={{ color: "var(--color-text)" }}>
-                Les bons plans du mois
-              </h2>
-            </div>
-            <p className="text-sm mb-6" style={{ color: "var(--color-muted)" }}>
-              Nos offres les mieux notées en ce moment. Lancez la comparaison ci-dessus pour tout voir.
+            <p className="font-extrabold text-base mb-1" style={{ color: "#c04000" }}>
+              Notre sélection HP Selectra — Forfaits Guinée {new Date().getFullYear()}
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {(featured.length ? featured : telecomOffers.slice(0, 3)).map((offer) => {
-                const provider = PROVIDERS.find((p) => p.slug === offer.providerSlug)!
-                return <OfferCard key={offer.slug} offer={offer} provider={provider} verticalSlug="telecom" />
-              })}
-            </div>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--color-text)" }}>
+              <strong>Orange Guinée</strong> s&apos;impose avec le HP Score A (88/100) : couverture 4G nationale, pass data variés et Orange Money intégré.
+              <strong> Telecel Guinée</strong> brille sur les pass nuit/weekend très compétitifs.
+              Pour les petits budgets sur Conakry, <strong>Cellcom</strong> reste le choix le plus économique.
+            </p>
+          </div>
+        </div>
 
-            <div className="text-center mt-8">
-              <button
-                onClick={launch}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "var(--color-primary)" }}
-              >
-                Voir toutes les offres <ArrowRight className="w-4 h-4" />
-              </button>
+        {/* Classement */}
+        <section id="classement" className="mb-16">
+          <h2 className="text-2xl sm:text-3xl font-extrabold mb-2" style={{ color: "var(--color-text)" }}>
+            🏆 Classement des opérateurs mobiles guinéens
+          </h2>
+          <p className="text-sm mb-8" style={{ color: "var(--color-muted)" }}>
+            {TELECOMS.length} opérateurs analysés · Couverture, tarifs, qualité réseau, offres data.
+          </p>
+          <div className="space-y-6">
+            {TELECOMS.map((op, i) => {
+              const offers = OFFERS.filter((o) => o.providerSlug === op.slug && o.verticalSlug === "telecom")
+                .sort((a, b) => b.hpScoreNum - a.hpScoreNum)
+              return (
+                <RankedProviderCard key={op.slug} provider={op} rank={i + 1}
+                  verticalSlug="telecom" topOffers={offers} isRecommended={i === 0} />
+              )
+            })}
+          </div>
+        </section>
+
+        {/* Offres phares */}
+        <section id="offres" className="mb-16">
+          <h2 className="text-2xl font-extrabold mb-6" style={{ color: "var(--color-text)" }}>📊 Comparatif offres phares</h2>
+          <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "var(--color-border)" }}>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ backgroundColor: "var(--color-surface)" }}>
+                    {["Opérateur", "Score", "Pass 1 Go", "Illimité", "Couverture", "Site"].map((h) => (
+                      <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide"
+                        style={{ color: "var(--color-muted)" }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {TELECOMS.map((op, i) => (
+                    <tr key={op.slug}
+                      style={{ backgroundColor: i % 2 === 0 ? "var(--color-card)" : "var(--color-surface)", borderTop: "1px solid var(--color-border)" }}>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                            style={{ backgroundColor: op.brandColor ?? "var(--color-primary)" }}>
+                            {op.name.slice(0, 2).toUpperCase()}
+                          </div>
+                          <Link href={`/telecom/fournisseurs/${op.slug}/`}
+                            className="font-semibold hover:underline" style={{ color: "var(--color-text)" }}>
+                            {op.name}
+                          </Link>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="inline-flex w-7 h-7 items-center justify-center rounded-full font-extrabold text-sm text-white"
+                          style={{ backgroundColor: op.hpScore === "A" ? "#6B8F3C" : op.hpScore === "B" ? "#8FB84E" : "#F0A500" }}>
+                          {op.hpScore}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-xs" style={{ color: "var(--color-muted)" }}>
+                        {op.slug === "orange-guinee" ? "≈ 30 000 GNF" : op.slug === "telecel-guinee" ? "≈ 25 000 GNF" : "≈ 15 000 GNF"}
+                      </td>
+                      <td className="px-4 py-3 text-xs">
+                        {op.slug === "cellcom-guinee" ? "⚠️ Limité" : "✅ Oui"}
+                      </td>
+                      <td className="px-4 py-3 text-xs">
+                        {op.slug === "orange-guinee" ? "🇬🇳 Nationale 4G" : op.slug === "telecel-guinee" ? "🏙️ Urbaine 4G" : "🏙️ Conakry"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {op.website ? (
+                          <a href={op.website} target="_blank" rel="noopener noreferrer"
+                            className="text-xs font-semibold px-2.5 py-1 rounded-lg"
+                            style={{ backgroundColor: "var(--color-primary-light)", color: "var(--color-primary)" }}>
+                            Visiter
+                          </a>
+                        ) : "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        )}
+          <p className="text-xs mt-3" style={{ color: "var(--color-muted)" }}>⚠️ Tarifs indicatifs — vérifiez directement auprès de l'opérateur.</p>
+        </section>
+
+        {/* Par usage */}
+        <section id="profils" className="mb-16">
+          <h2 className="text-2xl font-extrabold mb-3" style={{ color: "var(--color-text)" }}>🎯 Quel opérateur selon votre usage ?</h2>
+          <p className="text-sm mb-6" style={{ color: "var(--color-muted)" }}>Notre recommandation selon votre profil d'utilisation.</p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {PROFILES.map((p) => (
+              <div key={p.label} className="p-5 rounded-2xl border"
+                style={{ backgroundColor: "var(--color-card)", borderColor: "var(--color-border)" }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">{p.icon}</span>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: "var(--color-text)" }}>{p.label}</p>
+                    <p className="text-xs" style={{ color: "var(--color-muted)" }}>{p.reason}</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {p.ops.map((opName) => {
+                    const op = TELECOMS.find((x) => x.name === opName)
+                    return op ? (
+                      <Link key={opName} href={`/telecom/fournisseurs/${op.slug}/`}
+                        className="text-xs font-bold px-3 py-2 rounded-xl text-white"
+                        style={{ backgroundColor: op.brandColor ?? "var(--color-primary)" }}>
+                        {opName}
+                      </Link>
+                    ) : null
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="mb-16">
+          <h2 className="text-2xl font-extrabold mb-6" style={{ color: "var(--color-text)" }}>❓ Questions fréquentes</h2>
+          <div className="space-y-3">
+            {[
+              { q: "Quel est le meilleur opérateur mobile en Guinée en 2026 ?",
+                a: "Orange Guinée (HP Score A, 88/100) domine grâce à sa couverture 4G nationale, ses offres variées et l'intégration Orange Money. Telecel est compétitif sur le data, Cellcom sur les prix bas à Conakry." },
+              { q: "Quel opérateur a la meilleure couverture 4G en Guinée ?",
+                a: "Orange Guinée dispose du réseau 4G le plus étendu couvrant Conakry et les grandes villes de l'intérieur. Telecel est en expansion rapide. Cellcom couvre principalement les zones urbaines." },
+              { q: "Comment activer un pass data en Guinée ?",
+                a: "Composez le code USSD de votre opérateur (ex: *200# Orange, *440# Telecel) ou utilisez l'application officielle. Nos conseillers peuvent vous guider gratuitement." },
+              { q: "La portabilité du numéro existe-t-elle en Guinée ?",
+                a: "La portabilité des numéros est en cours de déploiement sous la supervision de l'ARPT. Renseignez-vous auprès de votre opérateur actuel ou contactez nos conseillers." },
+            ].map(({ q, a }) => (
+              <details key={q} className="group rounded-2xl border overflow-hidden" style={{ borderColor: "var(--color-border)" }}>
+                <summary className="flex items-center justify-between px-6 py-4 cursor-pointer list-none font-semibold text-sm"
+                  style={{ backgroundColor: "var(--color-card)", color: "var(--color-text)" }}>
+                  {q}
+                  <span className="ml-3 shrink-0 font-bold text-xl" style={{ color: "var(--color-primary)" }}>+</span>
+                </summary>
+                <div className="px-6 py-4 text-sm leading-relaxed"
+                  style={{ backgroundColor: "var(--color-surface)", color: "var(--color-muted)" }}>{a}</div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <div className="rounded-2xl p-8 text-center"
+          style={{ background: "linear-gradient(135deg, #1D3461 0%, #c04000 100%)" }}>
+          <p className="text-2xl font-extrabold text-white mb-2">Besoin d&apos;aide pour choisir ?</p>
+          <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.75)" }}>
+            Un conseiller Help'me Process analyse votre usage et vous recommande le meilleur forfait — gratuitement.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Bonjour, je cherche le meilleur forfait mobile en Guinée.")}`}
+              target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white" style={{ backgroundColor: "#25D366" }}>
+              <MessageCircle className="w-4 h-4" /> WhatsApp gratuit
+            </a>
+            <a href={`tel:+${CC_PHONE}`}
+              className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white border border-white/30">
+              <Phone className="w-4 h-4" /> Appeler
+            </a>
+          </div>
+        </div>
+
       </div>
     </>
-  )
-}
-
-function ChoiceTile({
-  active,
-  onToggle,
-  icon,
-  title,
-  subtitle,
-}: {
-  active: boolean
-  onToggle: () => void
-  icon: React.ReactNode
-  title: string
-  subtitle: string
-}) {
-  return (
-    <button
-      onClick={onToggle}
-      aria-pressed={active}
-      className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all active:scale-[0.98]"
-      style={{
-        borderColor: active ? "var(--color-secondary)" : "var(--color-border)",
-        backgroundColor: active ? "var(--color-secondary-light)" : "var(--color-surface)",
-      }}
-    >
-      <span
-        className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-white"
-        style={{ backgroundColor: active ? "var(--color-secondary)" : "var(--color-muted)" }}
-      >
-        {icon}
-      </span>
-      <span className="min-w-0">
-        <span className="block text-sm font-bold" style={{ color: "var(--color-text)" }}>{title}</span>
-        <span className="block text-xs" style={{ color: "var(--color-muted)" }}>{subtitle}</span>
-      </span>
-      <span
-        className="ml-auto w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0"
-        style={{
-          borderColor: active ? "var(--color-secondary)" : "var(--color-border)",
-          backgroundColor: active ? "var(--color-secondary)" : "transparent",
-        }}
-      >
-        {active && (
-          <svg className="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 011.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clipRule="evenodd" />
-          </svg>
-        )}
-      </span>
-    </button>
   )
 }
