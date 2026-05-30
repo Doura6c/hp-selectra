@@ -7,7 +7,8 @@ const FOOTER_LINKS = {
     { label: "Banques", href: "/banques/" },
     { label: "Internet Fixe (FAI)", href: "/fai/" },
     { label: "Assurances", href: "/assurances/" },
-    { label: "Énergie & Solaire", href: "/energie/" },
+    { label: "Microfinance", href: "/microfinance/" },
+    { label: "Villes de Guinée", href: "/villes/" },
   ],
   Outils: [
     { label: "Annuaire des entreprises", href: "/annuaire/" },

@@ -1,7 +1,7 @@
 const STATS = [
-  { value: "21", label: "Opérateurs analysés",   emoji: "🏢" },
-  { value: "46", label: "Offres comparées",       emoji: "📊" },
-  { value: "4",  label: "Secteurs actifs",         emoji: "✅" },
+  { value: "30", label: "Opérateurs analysés",   emoji: "🏢" },
+  { value: "63", label: "Offres comparées",       emoji: "📊" },
+  { value: "6",  label: "Secteurs actifs",         emoji: "✅" },
   { value: "0",  label: "Publicité cachée",        emoji: "🔒" },
 ]
 

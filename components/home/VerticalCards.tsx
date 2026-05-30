@@ -44,7 +44,7 @@ export default function VerticalCards() {
             Que souhaitez-vous comparer ?
           </h2>
           <p className="text-base max-w-xl mx-auto" style={{ color: "var(--color-muted)" }}>
-            7 secteurs couverts. 21 opérateurs analysés. Un seul objectif : vous faire économiser.
+            6 secteurs actifs. 30 opérateurs analysés. Un seul objectif : vous faire économiser.
           </p>
         </div>
 
