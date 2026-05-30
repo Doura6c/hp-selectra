@@ -28,6 +28,7 @@ export default function OfferDetail({ offer, provider, verticalSlug }: Props) {
     priceNote: offer.priceNote,
     url: `/${verticalSlug}/offres/${offer.slug}/`,
     verticalName: vertical?.name ?? verticalSlug,
+    hpScore: offer.hpScore,
   })
 
   const jsonLdBreadcrumb = breadcrumbSchema([

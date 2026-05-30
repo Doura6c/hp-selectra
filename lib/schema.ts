@@ -26,7 +26,11 @@ export function breadcrumbSchema(
   }
 }
 
-/** Product (offre) */
+/** Product (offre)
+ *  Pas de price dans offers : les tarifs sont indicatifs.
+ *  On utilise isRelatedTo + description pour transmettre priceNote
+ *  sans déclencher le schéma Merchant listings (qui exige un prix réel).
+ */
 export function productSchema(opts: {
   name: string
   description: string
@@ -34,31 +38,34 @@ export function productSchema(opts: {
   priceNote: string
   url: string
   verticalName: string
+  hpScore: string
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: opts.name,
-    description: opts.description,
+    description: `${opts.description} Tarif indicatif : ${opts.priceNote}.`,
     brand: {
       "@type": "Brand",
       name: opts.brandName,
     },
     category: opts.verticalName,
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "GNF",
-      price: "0",               // indicatif — prix réel dans priceNote
-      description: opts.priceNote,
-      availability: "https://schema.org/InStock",
-      url: `${BASE_URL}${opts.url}`,
-      seller: {
-        "@type": "Organization",
-        name: opts.brandName,
-      },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: scoreToRating(opts.hpScore),
+      bestRating: "5",
+      worstRating: "1",
+      reviewCount: "1",
+      ratingExplanation: `HP Score ${opts.hpScore} attribué par HP Selectra Guinée`,
     },
     url: `${BASE_URL}${opts.url}`,
+    // Pas de "offers" — prix indicatifs GNF non publiables comme merchant listing
   }
+}
+
+function scoreToRating(score: string): string {
+  const map: Record<string, string> = { A: "4.5", B: "3.8", C: "3.0", D: "2.0", E: "1.5" }
+  return map[score] ?? "3.0"
 }
 
 /** Organization (fournisseur) */
