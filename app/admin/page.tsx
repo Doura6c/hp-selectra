@@ -52,6 +52,22 @@ const MODULES = [
     color: "#0EA5E9",
   },
   {
+    href: "/admin/newsletter",
+    icon: Mail,
+    title: "Newsletter",
+    desc: "Gérer les segments et envoyer des campagnes email",
+    count: "0 abonnés",
+    color: "#E67E22",
+  },
+  {
+    href: "/admin/kpis",
+    icon: BarChart3,
+    title: "KPIs & Analytics",
+    desc: "Tableau de bord clics, leads et conversions",
+    count: null,
+    color: "#8B5CF6",
+  },
+  {
     href: "/admin/parametres",
     icon: Settings,
     title: "Paramètres & HP Score",

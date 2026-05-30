@@ -12,6 +12,7 @@ const FOOTER_LINKS = {
   Outils: [
     { label: "Annuaire des entreprises", href: "/annuaire/" },
     { label: "Calculateur Mobile Money", href: "/outils/calculateur-mobile-money/" },
+    { label: "Simulateur crédit bancaire", href: "/outils/simulateur-credit/" },
     { label: "Comparateur côte à côte", href: "/outils/comparer/" },
     { label: "Comparateur internet", href: "/fai/comparateur/" },
     { label: "Comparateur banques", href: "/banques/comparateur/" },

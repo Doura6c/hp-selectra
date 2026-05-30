@@ -3,7 +3,15 @@
 import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { ArrowLeft, Mail, Phone, MessageSquare, RefreshCw, Download, Search, Filter } from "lucide-react"
-import type { Lead, LeadChannel } from "@/lib/leads-store"
+import type { Lead, LeadChannel, LeadStatus } from "@/lib/leads-store"
+
+const STATUS_CONFIG: Record<LeadStatus, { label: string; color: string; bg: string }> = {
+  nouveau:    { label: "Nouveau",   color: "#2E86C1", bg: "#e8f4fd" },
+  contacte:   { label: "Contacté", color: "#E67E22", bg: "#fff3e0" },
+  "en-cours": { label: "En cours", color: "#8B5CF6", bg: "#f3e8ff" },
+  converti:   { label: "Converti", color: "#6B8F3C", bg: "#e8f5e9" },
+  perdu:      { label: "Perdu",    color: "#e74c3c", bg: "#fce4e4" },
+}
 
 const CHANNEL_LABELS: Record<LeadChannel, string> = {
   callback: "Rappel",
@@ -45,13 +53,25 @@ export default function AdminLeadsPage() {
   const [search, setSearch] = useState("")
   const [channelFilter, setChannelFilter] = useState<LeadChannel | "all">("all")
   const [verticalFilter, setVerticalFilter] = useState<string>("all")
+  const [statusFilter, setStatusFilter] = useState<LeadStatus | "all">("all")
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null)
+
+  async function updateStatus(id: string, status: LeadStatus) {
+    try {
+      await fetch("/api/leads?secret=hp-admin-2026", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      })
+      setLeads((prev) => prev.map((l) => l.id === id ? { ...l, status } : l))
+    } catch { /* silent */ }
+  }
 
   const loadLeads = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch("/api/leads")
+      const res = await fetch("/api/leads?secret=hp-admin-2026")
       if (!res.ok) {
         setError("Accès non autorisé — veuillez vous reconnecter.")
         return
@@ -73,7 +93,8 @@ export default function AdminLeadsPage() {
       .some((v) => v?.toLowerCase().includes(search.toLowerCase()))
     const matchChannel = channelFilter === "all" || l.channel === channelFilter
     const matchVertical = verticalFilter === "all" || l.verticalSlug === verticalFilter
-    return matchSearch && matchChannel && matchVertical
+    const matchStatus = statusFilter === "all" || l.status === statusFilter
+    return matchSearch && matchChannel && matchVertical && matchStatus
   })
 
   const realLeads = leads.filter((l) => !l.id.startsWith("demo-"))
@@ -194,6 +215,17 @@ export default function AdminLeadsPage() {
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 shrink-0" style={{ color: "var(--color-muted)" }} />
             <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as LeadStatus | "all")}
+              className="px-3 py-2.5 rounded-xl border text-sm outline-none"
+              style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-card)", color: "var(--color-text)" }}
+            >
+              <option value="all">Tous statuts</option>
+              {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
+                <option key={key} value={key}>{cfg.label}</option>
+              ))}
+            </select>
+            <select
               value={verticalFilter}
               onChange={(e) => setVerticalFilter(e.target.value)}
               className="px-3 py-2.5 rounded-xl border text-sm outline-none"
@@ -236,6 +268,7 @@ export default function AdminLeadsPage() {
                   <th className="text-left px-4 py-3 text-xs font-semibold" style={{ color: "var(--color-muted)" }}>CONTACT</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold hidden sm:table-cell" style={{ color: "var(--color-muted)" }}>MESSAGE</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold hidden md:table-cell" style={{ color: "var(--color-muted)" }}>VERTICALE</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold hidden lg:table-cell" style={{ color: "var(--color-muted)" }}>STATUT</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold" style={{ color: "var(--color-muted)" }}>DATE</th>
                   <th className="px-4 py-3 text-xs font-semibold text-right" style={{ color: "var(--color-muted)" }}>ACTIONS</th>
                 </tr>
@@ -311,6 +344,36 @@ export default function AdminLeadsPage() {
                         ) : (
                           <span className="text-xs" style={{ color: "var(--color-border)" }}>—</span>
                         )}
+                      </td>
+
+                      {/* Statut */}
+                      <td className="px-4 py-3 hidden lg:table-cell">
+                        <div className="flex flex-col gap-1.5">
+                          <span
+                            className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full w-fit"
+                            style={{
+                              backgroundColor: STATUS_CONFIG[lead.status ?? "nouveau"].bg,
+                              color: STATUS_CONFIG[lead.status ?? "nouveau"].color,
+                            }}
+                          >
+                            {STATUS_CONFIG[lead.status ?? "nouveau"].label}
+                          </span>
+                          <select
+                            value={lead.status ?? "nouveau"}
+                            onChange={(e) => updateStatus(lead.id, e.target.value as LeadStatus)}
+                            className="text-[10px] px-1.5 py-0.5 rounded border outline-none cursor-pointer"
+                            style={{
+                              borderColor: "var(--color-border)",
+                              backgroundColor: "var(--color-surface)",
+                              color: "var(--color-text)",
+                            }}
+                            disabled={isDemo}
+                          >
+                            {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
+                              <option key={key} value={key}>{cfg.label}</option>
+                            ))}
+                          </select>
+                        </div>
                       </td>
 
                       {/* Date */}

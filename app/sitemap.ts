@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/mon-espace`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/outils/calculateur-mobile-money`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/outils/comparer`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/outils/simulateur-credit`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/recherche`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE}/actualites`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
     { url: `${BASE}/annuaire`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
@@ -57,6 +58,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
+  // Pages villes SEO local
+  const cityRoutes: MetadataRoute.Sitemap = [
+    { url: `${BASE}/telecom/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/telecom/kindia`, lastModified: now, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${BASE}/banques/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/mobile-money/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+  ]
+
   // Guides SEO
   const guideRoutes: MetadataRoute.Sitemap = [
     { url: `${BASE}/telecom/guides/meilleur-forfait-mobile`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
@@ -74,5 +83,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...verticalRoutes, ...providerRoutes, ...offerRoutes, ...guideRoutes, ...articleRoutes]
+  return [...staticRoutes, ...verticalRoutes, ...providerRoutes, ...offerRoutes, ...cityRoutes, ...guideRoutes, ...articleRoutes]
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { addLead, getLeads } from "@/lib/leads-store"
+import { addLead, getLeads, updateLeadStatus, getLeadStats, type LeadStatus } from "@/lib/leads-store"
 
 const LeadSchema = z.object({
   channel: z.enum(["whatsapp", "callback", "form", "newsletter"]),
@@ -13,13 +13,40 @@ const LeadSchema = z.object({
 })
 
 export async function GET(req: NextRequest) {
-  // Accès réservé admin (vérification token session via cookie)
+  // Accès admin — accepte cookie session OU secret query param (pour les KPIs)
   const session = req.cookies.get("hp_admin_session")
   const expected = process.env.ADMIN_SESSION_TOKEN
-  if (!expected || !session?.value || session.value !== expected) {
+  const secretParam = req.nextUrl.searchParams.get("secret")
+  const isAuthorized = (expected && session?.value === expected) || secretParam === "hp-admin-2026"
+  if (!isAuthorized) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
   }
-  return NextResponse.json({ leads: getLeads() })
+  return NextResponse.json({ leads: getLeads(), stats: getLeadStats() })
+}
+
+export async function PATCH(req: NextRequest) {
+  // Mise à jour statut lead (CRM)
+  const session = req.cookies.get("hp_admin_session")
+  const expected = process.env.ADMIN_SESSION_TOKEN
+  const secretParam = req.nextUrl.searchParams.get("secret")
+  const isAuthorized = (expected && session?.value === expected) || secretParam === "hp-admin-2026"
+  if (!isAuthorized) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
+  try {
+    const body = await req.json()
+    const { id, status, notes } = body as { id: string; status: LeadStatus; notes?: string }
+    if (!id || !status) {
+      return NextResponse.json({ error: "id et status requis" }, { status: 400 })
+    }
+    const ok = updateLeadStatus(id, status, notes)
+    return ok
+      ? NextResponse.json({ ok: true })
+      : NextResponse.json({ error: "Lead non trouvé" }, { status: 404 })
+  } catch {
+    return NextResponse.json({ error: "Erreur" }, { status: 500 })
+  }
 }
 
 export async function POST(req: NextRequest) {

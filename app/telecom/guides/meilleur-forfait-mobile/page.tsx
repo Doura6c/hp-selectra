@@ -4,6 +4,7 @@ import { ChevronRight, Phone, MessageCircle } from "lucide-react"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import OfferCard from "@/components/compare/OfferCard"
 import ReviewsSection from "@/components/ui/ReviewsSection"
+import SocialShare from "@/components/ui/SocialShare"
 import TableOfContents from "@/components/ui/TableOfContents"
 import { buildJsonLd, howToSchema, faqSchema, breadcrumbSchema } from "@/lib/schema"
 
@@ -443,6 +444,9 @@ export default function GuideForaitMobilePage() {
         </div>
       </div>
 
+      <div className="container max-w-4xl">
+        <SocialShare title="Quel est le meilleur forfait mobile en Guinée ?" className="mb-8" />
+      </div>
       <ReviewsSection />
     </>
   )

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ARTICLES, OFFERS, PROVIDERS, VERTICALS } from "@/lib/data/seed-data"
 import OfferCard from "@/components/compare/OfferCard"
+import SocialShare from "@/components/ui/SocialShare"
 import { formatDate } from "@/lib/utils"
 import { ArrowLeft, Clock, User } from "lucide-react"
 
@@ -172,8 +173,14 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         )}
 
+        {/* Partage social */}
+        <SocialShare
+          title={article.title}
+          className="mt-8"
+        />
+
         {/* Retour */}
-        <div className="mt-10 pt-6 border-t" style={{ borderColor: "var(--color-border)" }}>
+        <div className="mt-6 pt-6 border-t" style={{ borderColor: "var(--color-border)" }}>
           <Link
             href="/actualites/"
             className="inline-flex items-center gap-2 text-sm font-semibold"
