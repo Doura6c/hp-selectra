@@ -40,6 +40,7 @@ const NAV_ITEMS = [
       { label: "Tous les fournisseurs", href: "/fai/fournisseurs/" },
     ],
   },
+  { label: "Annuaire", href: "/annuaire/" },
   { label: "Assurances", href: "/assurances/", soon: true },
   { label: "Actualités", href: "/actualites/" },
 ]

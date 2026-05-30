@@ -127,6 +127,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 72,
     verified: true,
     sponsoredTier: "free",
+    website: "https://telecel.gn",
     brandColor: "#E30613",
   },
   {
@@ -149,6 +150,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 55,
     verified: true,
     sponsoredTier: "free",
+    website: "https://guineetelecom.gn",
     brandColor: "#003087",
   },
   {
@@ -172,6 +174,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 75,
     verified: true,
     sponsoredTier: "free",
+    website: "https://orange.gn",
     brandColor: "#FF6600",
   },
   {
@@ -183,6 +186,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 62,
     verified: true,
     sponsoredTier: "free",
+    website: "https://telecel.gn",
     brandColor: "#FFCC00",
   },
   {
@@ -230,6 +234,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 75,
     verified: true,
     sponsoredTier: "free",
+    website: "https://bicigui.net",
     brandColor: "#003087",
   },
   {
@@ -241,6 +246,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 72,
     verified: true,
     sponsoredTier: "free",
+    website: "https://orabank.com",
     brandColor: "#E30613",
   },
   {
@@ -252,6 +258,7 @@ export const PROVIDERS: ProviderData[] = [
     hpScoreNum: 70,
     verified: true,
     sponsoredTier: "free",
+    website: "https://ubagroup.com",
     brandColor: "#B02840",
   },
   {
