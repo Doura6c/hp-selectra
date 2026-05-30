@@ -22,8 +22,10 @@ const STEPS: Record<string, Step> = {
   start: {
     bot: "Bonjour 👋 Je suis HP Assistant, l'assistant de Help'me Process. Que souhaitez-vous comparer aujourd'hui ?",
     actions: [
-      { kind: "step", label: "📱 Forfait & Internet", to: "telecom" },
+      { kind: "step", label: "📱 Forfaits mobiles", to: "telecom" },
       { kind: "step", label: "💸 Mobile Money", to: "mobilemoney" },
+      { kind: "step", label: "🏦 Banques", to: "banques" },
+      { kind: "step", label: "🌐 Internet fixe", to: "fai" },
       { kind: "step", label: "🗣️ Parler à un conseiller", to: "advisor" },
     ],
   },
@@ -31,23 +33,43 @@ const STEPS: Record<string, Step> = {
     bot: "Bon choix ! Cherchez-vous plutôt un forfait mobile, un pass data ponctuel, ou une box internet pour la maison ?",
     actions: [
       { kind: "link", label: "Comparer les forfaits", href: "/telecom/comparateur/" },
-      { kind: "link", label: "Meilleur forfait mobile", href: "/telecom/meilleur-forfait-mobile/" },
-      { kind: "step", label: "Je préfère être conseillé", to: "advisor" },
+      { kind: "link", label: "Meilleur forfait 2026", href: "/telecom/meilleur-forfait-mobile/" },
+      { kind: "link", label: "Tous les opérateurs", href: "/telecom/fournisseurs/" },
+      { kind: "step", label: "Être conseillé", to: "advisor" },
     ],
   },
   mobilemoney: {
-    bot: "Pour le mobile money, le moins cher du marché est Soutra Money : dépôts et retraits gratuits, transfert à 1 % maximum. Voulez-vous comparer les frais ?",
+    bot: "Pour le mobile money, Soutra Money est le moins cher du marché : dépôts & retraits gratuits, transfert ≤ 1 %. Que souhaitez-vous faire ?",
     actions: [
       { kind: "link", label: "Comparer les frais", href: "/mobile-money/comparateur/" },
       { kind: "link", label: "Meilleur transfert", href: "/mobile-money/meilleur-transfert-argent/" },
-      { kind: "step", label: "Parler à un conseiller", to: "advisor" },
+      { kind: "link", label: "Tous les services", href: "/mobile-money/fournisseurs/" },
+      { kind: "step", label: "Être conseillé", to: "advisor" },
+    ],
+  },
+  banques: {
+    bot: "Pour les banques guinéennes, Ecobank a le meilleur HP Score. Cherchez-vous un compte courant, une carte bancaire ou un placement épargne ?",
+    actions: [
+      { kind: "link", label: "Comparer les comptes", href: "/banques/comparateur/" },
+      { kind: "link", label: "Toutes les banques", href: "/banques/fournisseurs/" },
+      { kind: "wa", label: "Ouvrir un compte (aide)", text: "Bonjour, je souhaite ouvrir un compte bancaire en Guinée. Pouvez-vous m'orienter ?" },
+      { kind: "step", label: "← Menu principal", to: "start" },
+    ],
+  },
+  fai: {
+    bot: "Pour l'internet fixe, Box 4G Orange est la solution la plus rapide à installer. Votre usage est résidentiel ou professionnel ?",
+    actions: [
+      { kind: "link", label: "Comparer les FAI", href: "/fai/comparateur/" },
+      { kind: "link", label: "Meilleur FAI 2026", href: "/fai/meilleur-fai/" },
+      { kind: "link", label: "Tous les fournisseurs", href: "/fai/fournisseurs/" },
+      { kind: "step", label: "Être conseillé", to: "advisor" },
     ],
   },
   advisor: {
-    bot: "Avec plaisir 🙌 Un conseiller Help'me Process peut vous accompagner gratuitement, par WhatsApp ou par téléphone. Comment préférez-vous être contacté ?",
+    bot: "Avec plaisir 🙌 Un conseiller Help'me Process vous accompagne gratuitement, par WhatsApp ou par téléphone. Comment préférez-vous être contacté ?",
     actions: [
-      { kind: "wa", label: "Discuter sur WhatsApp", text: "Bonjour, je viens de HP Selectra (HP Assistant) et j'aimerais être conseillé pour choisir la meilleure offre." },
-      { kind: "tel", label: "Appeler le centre" },
+      { kind: "wa", label: "💬 WhatsApp", text: "Bonjour, je viens de HP Selectra (HP Assistant) et j'aimerais être conseillé pour choisir la meilleure offre." },
+      { kind: "tel", label: "📞 Appeler le centre" },
       { kind: "step", label: "← Retour au menu", to: "start" },
     ],
   },
