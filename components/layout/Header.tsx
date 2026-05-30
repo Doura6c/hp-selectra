@@ -31,6 +31,15 @@ const NAV_ITEMS = [
       { label: "Toutes les banques", href: "/banques/fournisseurs/" },
     ],
   },
+  {
+    label: "Internet Fixe",
+    href: "/fai/",
+    sub: [
+      { label: "Comparateur internet", href: "/fai/comparateur/" },
+      { label: "Meilleur FAI 2026", href: "/fai/meilleur-fai/" },
+      { label: "Tous les fournisseurs", href: "/fai/fournisseurs/" },
+    ],
+  },
   { label: "Assurances", href: "/assurances/", soon: true },
   { label: "Actualités", href: "/actualites/" },
 ]
