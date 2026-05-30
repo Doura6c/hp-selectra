@@ -66,6 +66,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/mobile-money/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/assurances/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/microfinance/conakry`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    // Hub villes
+    { url: `${BASE}/villes`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/villes/labe`, lastModified: now, changeFrequency: "monthly", priority: 0.78 },
+    { url: `${BASE}/villes/kankan`, lastModified: now, changeFrequency: "monthly", priority: 0.78 },
+    { url: `${BASE}/villes/nzerekore`, lastModified: now, changeFrequency: "monthly", priority: 0.78 },
+    { url: `${BASE}/villes/mamou`, lastModified: now, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${BASE}/villes/boke`, lastModified: now, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${BASE}/villes/faranah`, lastModified: now, changeFrequency: "monthly", priority: 0.75 },
   ]
 
   // Guides SEO
