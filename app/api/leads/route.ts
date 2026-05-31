@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { addLead, getLeads, updateLeadStatus, getLeadStats, type LeadStatus } from "@/lib/leads-store"
+import { notifyNewLead } from "@/lib/notify"
 
 const LeadSchema = z.object({
   channel: z.enum(["whatsapp", "callback", "form", "newsletter"]),
@@ -59,6 +60,9 @@ export async function POST(req: NextRequest) {
     }
 
     addLead(data)
+
+    // Notification email (async — ne bloque pas la réponse)
+    notifyNewLead(data).catch(() => {})
 
     // Stockage DB désactivé tant que DATABASE_URL n'est pas configuré
     // Pour activer : décommenter le bloc ci-dessous et configurer DATABASE_URL

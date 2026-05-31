@@ -69,8 +69,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Ajouter les codes de vérification Google Search Console / Bing ici
-    // google: "XXXX",
+    // Coller ici le code fourni par Google Search Console (onglet "Balise HTML")
+    // google: process.env.GOOGLE_SITE_VERIFICATION,
   },
 }
 
