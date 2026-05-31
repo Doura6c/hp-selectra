@@ -3,7 +3,7 @@
  * Injecter via : <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: buildJsonLd(obj) }} />
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://hp-selectra-app.vercel.app"
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://hpshop-afrique.vercel.app"
 
 /** Sérialise en JSON en échappant < pour éviter les injections XSS */
 export function buildJsonLd(obj: unknown): string {

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Meilleure assurance en Guinée 2026 — Comparatif compagnies",
   description:
     "Quelle est la meilleure assurance auto, santé ou habitation en Guinée en 2026 ? Comparatif NSIA, UGAR-Activa, SUNU selon le HP Score indépendant.",
-  alternates: { canonical: "https://hp-selectra-app.vercel.app/assurances/meilleur-assurance/" },
+  alternates: { canonical: "https://hpshop-afrique.vercel.app/assurances/meilleur-assurance/" },
 }
 
 const ASSUREURS = PROVIDERS.filter((p) => p.verticalSlug === "assurances")
@@ -45,7 +45,7 @@ export default function MeilleurAssurancePage() {
   const jsonLdHowTo = buildJsonLd(howToSchema({
     name: "Comment choisir la meilleure assurance en Guinée",
     description: "Guide pour sélectionner la bonne compagnie d'assurance en Guinée selon vos besoins.",
-    url: "https://hp-selectra-app.vercel.app/assurances/meilleur-assurance/",
+    url: "https://hpshop-afrique.vercel.app/assurances/meilleur-assurance/",
     steps: STEPS.map((s) => ({ name: s.title, text: s.desc })),
   }))
 

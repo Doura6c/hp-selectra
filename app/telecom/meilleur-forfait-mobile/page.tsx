@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Meilleur forfait mobile en Guinée 2026 — Comparatif opérateurs",
   description:
     "Quel est le meilleur forfait mobile en Guinée en 2026 ? Comparatif Orange Guinée, Telecel, Cellcom selon le HP Score indépendant. Data, appels, couverture 4G.",
-  alternates: { canonical: "https://hp-selectra-app.vercel.app/telecom/meilleur-forfait-mobile/" },
+  alternates: { canonical: "https://hpshop-afrique.vercel.app/telecom/meilleur-forfait-mobile/" },
 }
 
 const OPERATEURS = PROVIDERS.filter((p) => p.verticalSlug === "telecom")
@@ -45,7 +45,7 @@ export default function MeilleurForfaitMobilePage() {
   const jsonLdHowTo = buildJsonLd(howToSchema({
     name: "Comment choisir le meilleur forfait mobile en Guinée",
     description: "Guide pour sélectionner le meilleur opérateur et forfait mobile en Guinée selon votre profil.",
-    url: "https://hp-selectra-app.vercel.app/telecom/meilleur-forfait-mobile/",
+    url: "https://hpshop-afrique.vercel.app/telecom/meilleur-forfait-mobile/",
     steps: STEPS.map((s) => ({ name: s.title, text: s.desc })),
   }))
 

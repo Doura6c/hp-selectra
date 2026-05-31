@@ -6,7 +6,7 @@ import HPAssistant from "@/components/layout/HPAssistant"
 import StickyCTA from "@/components/layout/StickyCTA"
 import BackToTop from "@/components/ui/BackToTop"
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? "https://hp-selectra-app.vercel.app"
+const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? "https://hpshop-afrique.vercel.app"
 
 export const viewport: Viewport = {
   themeColor: "#1D3461",

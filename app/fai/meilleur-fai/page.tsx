@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Meilleur FAI en Guinée 2026 — Comparatif fournisseurs internet",
   description:
     "Quel est le meilleur fournisseur d'accès internet en Guinée en 2026 ? Comparatif Orange Box, Guinée Télécom, GUILAB, Telecel Box selon le HP Score indépendant.",
-  alternates: { canonical: "https://hp-selectra-app.vercel.app/fai/meilleur-fai/" },
+  alternates: { canonical: "https://hpshop-afrique.vercel.app/fai/meilleur-fai/" },
 }
 
 const FAI_PROVIDERS = PROVIDERS.filter((p) => p.verticalSlug === "fai")
@@ -45,7 +45,7 @@ export default function MeilleurFaiPage() {
   const jsonLdHowTo = buildJsonLd(howToSchema({
     name: "Comment choisir le meilleur fournisseur internet en Guinée",
     description: "Guide pour sélectionner le bon FAI selon votre usage, zone et budget en Guinée.",
-    url: "https://hp-selectra-app.vercel.app/fai/meilleur-fai/",
+    url: "https://hpshop-afrique.vercel.app/fai/meilleur-fai/",
     steps: STEPS.map((s) => ({ name: s.title, text: s.desc })),
   }))
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Meilleure box internet Guinée 2026 — Comparateur FAI",
   description:
     "Comparez les meilleures box internet en Guinée : Orange Box, Telecel Vana, GUILAB, Guinée Télécom. HP Score indépendant — Box 4G, ADSL, Fibre, Satellite.",
-  alternates: { canonical: "https://hp-selectra-app.vercel.app/fai/comparateur/" },
+  alternates: { canonical: "https://hpshop-afrique.vercel.app/fai/comparateur/" },
 }
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"

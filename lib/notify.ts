@@ -85,7 +85,7 @@ function buildHtml(lead: LeadNotifPayload): string {
 
           <!-- CTA -->
           <div style="padding:20px 32px 28px">
-            <a href="${process.env.NEXT_PUBLIC_BASE_URL ?? "https://hp-selectra-app.vercel.app"}/admin/leads"
+            <a href="${process.env.NEXT_PUBLIC_BASE_URL ?? "https://hpshop-afrique.vercel.app"}/admin/leads"
               style="display:inline-block;background:#1D3461;color:#fff;font-weight:700;font-size:13px;padding:12px 24px;border-radius:8px;text-decoration:none">
               Voir dans le back-office →
             </a>
@@ -94,7 +94,7 @@ function buildHtml(lead: LeadNotifPayload): string {
 
         <!-- Footer -->
         <p style="text-align:center;font-size:11px;color:#aaa;margin-top:16px">
-          HP Selectra Guinée · Notifications automatiques · <a href="${process.env.NEXT_PUBLIC_BASE_URL ?? "https://hp-selectra-app.vercel.app"}" style="color:#aaa">hp-selectra.com</a>
+          HP Selectra Guinée · Notifications automatiques · <a href="${process.env.NEXT_PUBLIC_BASE_URL ?? "https://hpshop-afrique.vercel.app"}" style="color:#aaa">hp-selectra.com</a>
         </p>
       </td>
     </tr>

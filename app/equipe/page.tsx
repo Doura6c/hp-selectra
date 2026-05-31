@@ -138,7 +138,7 @@ export default function EquipePage() {
       name: `${expert.prenom} ${expert.nom}`,
       jobTitle: expert.titre,
       worksFor: "HP Selectra — Help'me Process",
-      url: `https://hp-selectra-app.vercel.app/equipe#${expert.id}`,
+      url: `https://hpshop-afrique.vercel.app/equipe#${expert.id}`,
     }))
   )
 

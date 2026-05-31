@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Meilleur micro-crédit en Guinée 2026 — Comparatif IMF",
   description:
     "Quel est le meilleur micro-crédit en Guinée en 2026 ? Comparatif CRG-SA, Finafrica, Akiba Finance selon le HP Score indépendant. Agricole, PME, épargne.",
-  alternates: { canonical: "https://hp-selectra-app.vercel.app/microfinance/meilleur-microcredit/" },
+  alternates: { canonical: "https://hpshop-afrique.vercel.app/microfinance/meilleur-microcredit/" },
 }
 
 const IMF_PROVIDERS = PROVIDERS.filter((p) => p.verticalSlug === "microfinance")
@@ -45,7 +45,7 @@ export default function MeilleurMicrocreditPage() {
   const jsonLdHowTo = buildJsonLd(howToSchema({
     name: "Comment obtenir un micro-crédit en Guinée",
     description: "Guide pour choisir et obtenir un micro-crédit auprès des meilleures IMF guinéennes.",
-    url: "https://hp-selectra-app.vercel.app/microfinance/meilleur-microcredit/",
+    url: "https://hpshop-afrique.vercel.app/microfinance/meilleur-microcredit/",
     steps: STEPS.map((s) => ({ name: s.title, text: s.desc })),
   }))
 

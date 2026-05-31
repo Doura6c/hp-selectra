@@ -29,7 +29,7 @@ Cette semaine, voici les offres et actualités sélectionnées par HP Selectra p
 📰 **Actualité de la semaine**
 [Titre article] — [Résumé en 1-2 phrases]
 
-→ Comparez toutes les offres sur hp-selectra-app.vercel.app
+→ Comparez toutes les offres sur hpshop-afrique.vercel.app
 
 ---
 HP Selectra | Guinée Conakry
@@ -50,7 +50,7 @@ Nous avons sélectionné une offre spéciale disponible cette semaine en Guinée
 
 💡 Cette offre est disponible jusqu'au [date]. Comparez et choisissez le meilleur :
 
-→ Voir l'offre sur hp-selectra-app.vercel.app
+→ Voir l'offre sur hpshop-afrique.vercel.app
 
 ---
 HP Selectra | Conseil indépendant · Gratuit
@@ -68,7 +68,7 @@ Notre équipe vient de publier un nouveau guide pour vous aider à mieux choisir
 [Description du guide en 2-3 phrases. Ce guide vous aidera à faire le bon choix en tenant compte de votre situation.]
 
 👉 Lire le guide gratuitement :
-→ hp-selectra-app.vercel.app/[lien-guide]
+→ hpshop-afrique.vercel.app/[lien-guide]
 
 Des questions ? Contactez-nous via WhatsApp ou téléphone — nos conseillers sont disponibles.
 

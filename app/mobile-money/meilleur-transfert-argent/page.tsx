@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Meilleur transfert d'argent en Guinée 2026 — Comparatif Mobile Money",
   description:
     "Quel service mobile money propose les frais les plus bas en Guinée en 2026 ? Soutra Money, Orange Money, MTN MoMo — comparatif HP Score indépendant.",
-  alternates: { canonical: "https://hp-selectra-app.vercel.app/mobile-money/meilleur-transfert-argent/" },
+  alternates: { canonical: "https://hpshop-afrique.vercel.app/mobile-money/meilleur-transfert-argent/" },
 }
 
 const MM_PROVIDERS = PROVIDERS.filter((p) => p.verticalSlug === "mobile-money")
@@ -45,7 +45,7 @@ export default function MeilleurTransfertArgentPage() {
   const jsonLdHowTo = buildJsonLd(howToSchema({
     name: "Comment envoyer de l'argent avec le mobile money en Guinée",
     description: "Guide pour choisir le meilleur service de transfert d'argent mobile en Guinée.",
-    url: "https://hp-selectra-app.vercel.app/mobile-money/meilleur-transfert-argent/",
+    url: "https://hpshop-afrique.vercel.app/mobile-money/meilleur-transfert-argent/",
     steps: STEPS.map((s) => ({ name: s.title, text: s.desc })),
   }))
 

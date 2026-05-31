@@ -8,7 +8,7 @@ import { buildJsonLd, faqSchema, breadcrumbSchema } from "@/lib/schema"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
 const CC_PHONE  = process.env.NEXT_PUBLIC_CC_PHONE        ?? "224628935335"
-const BASE_URL  = "https://hp-selectra-app.vercel.app"
+const BASE_URL  = "https://hpshop-afrique.vercel.app"
 
 export const metadata: Metadata = {
   title: "Meilleur forfait mobile à Conakry 2026 — Comparatif opérateurs | HP Selectra",

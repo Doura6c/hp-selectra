@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next"
 import { OFFERS, PROVIDERS, ARTICLES, VERTICALS } from "@/lib/data/seed-data"
 
-const BASE = "https://hp-selectra-app.vercel.app"
+const BASE = "https://hpshop-afrique.vercel.app"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()

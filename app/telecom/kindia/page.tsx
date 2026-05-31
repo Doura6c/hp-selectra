@@ -7,7 +7,7 @@ import ReviewsSection from "@/components/ui/ReviewsSection"
 import { buildJsonLd, faqSchema, breadcrumbSchema } from "@/lib/schema"
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "224628935335"
-const BASE_URL  = "https://hp-selectra-app.vercel.app"
+const BASE_URL  = "https://hpshop-afrique.vercel.app"
 
 export const metadata: Metadata = {
   title: "Meilleur forfait mobile à Kindia 2026 — Comparatif opérateurs | HP Selectra",

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Meilleure banque en Guinée 2026 — Quel compte bancaire choisir ?",
   description:
     "Quelle est la meilleure banque pour ouvrir un compte en Guinée en 2026 ? Comparatif Ecobank, Orabank, UBA, Vista Bank selon le HP Score indépendant.",
-  alternates: { canonical: "https://hp-selectra-app.vercel.app/banques/meilleur-compte/" },
+  alternates: { canonical: "https://hpshop-afrique.vercel.app/banques/meilleur-compte/" },
 }
 
 const BANQUES_PROVIDERS = PROVIDERS.filter((p) => p.verticalSlug === "banques")
@@ -47,7 +47,7 @@ export default function MeilleurComptePage() {
   const jsonLdHowTo = buildJsonLd(howToSchema({
     name: "Comment ouvrir le meilleur compte bancaire en Guinée",
     description: "Guide étape par étape pour choisir et ouvrir un compte bancaire en Guinée selon votre profil.",
-    url: "https://hp-selectra-app.vercel.app/banques/meilleur-compte/",
+    url: "https://hpshop-afrique.vercel.app/banques/meilleur-compte/",
     steps: STEPS.map((s) => ({ name: s.title, text: s.desc })),
   }))
 
