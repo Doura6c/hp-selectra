@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { PROVIDERS, OFFERS, VERTICALS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
+import ProviderLogoAvatar from "@/components/ui/ProviderLogoAvatar"
 import { Globe, CheckCircle, ExternalLink, ArrowRight } from "lucide-react"
 
 const LIVE_VERTICALS = VERTICALS.filter((v) => v.isLive)
@@ -158,12 +159,7 @@ export default function AnnuairePage() {
                   <div className="p-5">
                     {/* Identité */}
                     <div className="flex items-start gap-3 mb-4">
-                      <div
-                        className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold text-white shrink-0"
-                        style={{ backgroundColor: provider.brandColor ?? "var(--color-primary)" }}
-                      >
-                        {provider.name.slice(0, 2).toUpperCase()}
-                      </div>
+                      <ProviderLogoAvatar provider={provider} size={56} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 mb-0.5">
                           <h3 className="font-bold text-sm truncate" style={{ color: "var(--color-text)" }}>

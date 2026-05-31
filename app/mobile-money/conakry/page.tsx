@@ -99,10 +99,13 @@ export default function MobileMoneyConakryPage() {
                 className="flex items-center gap-4 p-4 rounded-2xl border transition-all hover:shadow-md"
                 style={{ backgroundColor: "var(--color-card)", borderColor: i === 0 ? "#E67E22" : "var(--color-border)" }}>
                 <span className="text-lg font-extrabold w-6 text-center" style={{ color: i === 0 ? "#F0A500" : "var(--color-muted)" }}>#{i + 1}</span>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-extrabold shrink-0"
-                  style={{ backgroundColor: p.brandColor ?? "var(--color-primary)" }}>
-                  {p.name.slice(0, 2).toUpperCase()}
-                </div>
+                {p.logo ? (
+                  <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0"><img src={p.logo} alt={p.name} className="w-full h-full object-cover" /></div>
+                ) : (
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-extrabold shrink-0" style={{ backgroundColor: p.brandColor ?? "var(--color-primary)" }}>
+                    {p.name.split(/[\s-]+/).slice(0, 2).map((w: string) => w[0]?.toUpperCase() ?? "").join("")}
+                  </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-sm" style={{ color: "var(--color-text)" }}>{p.name}</p>
                   <p className="text-xs truncate" style={{ color: "var(--color-muted)" }}>{p.description?.slice(0, 70)}…</p>
@@ -151,14 +154,12 @@ export default function MobileMoneyConakryPage() {
             <p className="font-bold mb-4" style={{ color: "var(--color-text)" }}>Exemple : retrait de 100 000 GNF</p>
             <div className="space-y-3">
               {[
-                { name: "Soutra Money", frais: "900 GNF", note: "Tarifs réels vérifiés ✅", color: "#1A5276", best: true },
-                { name: "MTN MoMo", frais: "≈ 1 200 GNF", note: "Indicatif à vérifier", color: "#E30613", best: false },
-                { name: "Orange Money", frais: "≈ 1 500 GNF", note: "Indicatif à vérifier", color: "#FF6600", best: false },
+                { name: "Soutra Money", logo: "/logos/soutra-money.png", frais: "900 GNF", note: "Tarifs réels vérifiés ✅", color: "#1A5276", best: true },
+                { name: "MTN MoMo", logo: "/logos/mtn-momo.svg", frais: "≈ 1 200 GNF", note: "Indicatif à vérifier", color: "#E30613", best: false },
+                { name: "Orange Money", logo: "/logos/orange-money.svg", frais: "≈ 1 500 GNF", note: "Indicatif à vérifier", color: "#FF6600", best: false },
               ].map((s) => (
                 <div key={s.name} className="flex items-center gap-4 p-3 rounded-xl" style={{ backgroundColor: s.best ? "rgba(107,143,60,0.08)" : "var(--color-surface)", border: s.best ? "1px solid #6B8F3C" : "1px solid var(--color-border)" }}>
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0" style={{ backgroundColor: s.color }}>
-                    {s.name.slice(0, 2).toUpperCase()}
-                  </div>
+                  <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0"><img src={s.logo} alt={s.name} className="w-full h-full object-cover" /></div>
                   <div className="flex-1">
                     <p className="font-bold" style={{ color: "var(--color-text)" }}>{s.name}</p>
                     <p className="text-xs" style={{ color: "var(--color-muted)" }}>{s.note}</p>

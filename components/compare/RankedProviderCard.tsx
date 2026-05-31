@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Globe, ChevronDown, ChevronUp, CheckCircle2, XCircle, Award, MessageCircle } from "lucide-react"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import type { ProviderData, OfferData } from "@/lib/data/seed-data"
@@ -81,13 +82,26 @@ export default function RankedProviderCard({
             #{rank}
           </div>
 
-          {/* Monogramme */}
-          <div
-            className="w-20 h-20 rounded-2xl flex items-center justify-center text-2xl font-extrabold text-white shadow-lg"
-            style={{ backgroundColor: provider.brandColor ?? "var(--color-primary)" }}
-          >
-            {provider.name.slice(0, 2).toUpperCase()}
-          </div>
+          {/* Logo / monogramme */}
+          {provider.logo ? (
+            <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src={provider.logo}
+                alt={`Logo ${provider.name}`}
+                width={80}
+                height={80}
+                className="w-full h-full object-cover"
+                unoptimized
+              />
+            </div>
+          ) : (
+            <div
+              className="w-20 h-20 rounded-2xl flex items-center justify-center text-2xl font-extrabold text-white shadow-lg"
+              style={{ backgroundColor: provider.brandColor ?? "var(--color-primary)" }}
+            >
+              {provider.name.split(/[\s-]+/).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? "").join("")}
+            </div>
+          )}
 
           {/* Nom */}
           <div className="text-center">

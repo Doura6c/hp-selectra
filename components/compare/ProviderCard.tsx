@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import type { ProviderData } from "@/lib/data/seed-data"
 
@@ -19,12 +20,25 @@ export default function ProviderCard({ provider, verticalSlug, offerCount }: Pro
       }}
     >
       {/* Logo / monogramme */}
-      <div
-        className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold text-white shrink-0"
-        style={{ backgroundColor: provider.brandColor ?? "var(--color-primary)" }}
-      >
-        {provider.name.slice(0, 2).toUpperCase()}
-      </div>
+      {provider.logo ? (
+        <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 shadow-sm">
+          <Image
+            src={provider.logo}
+            alt={`Logo ${provider.name}`}
+            width={56}
+            height={56}
+            className="w-full h-full object-cover"
+            unoptimized
+          />
+        </div>
+      ) : (
+        <div
+          className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold text-white shrink-0"
+          style={{ backgroundColor: provider.brandColor ?? "var(--color-primary)" }}
+        >
+          {provider.name.split(/[\s-]+/).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? "").join("")}
+        </div>
+      )}
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5">

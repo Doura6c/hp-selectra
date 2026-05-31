@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { PROVIDERS, OFFERS } from "@/lib/data/seed-data"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
+import ProviderLogoAvatar from "@/components/ui/ProviderLogoAvatar"
 import OfferCard from "@/components/compare/OfferCard"
 import ProviderMeta from "@/components/ui/ProviderMeta"
 import Breadcrumb from "@/components/ui/Breadcrumb"
@@ -70,12 +71,7 @@ export default async function MobileMoneyProviderPage({ params }: Props) {
           />
 
           <div className="flex items-start gap-6">
-            <div
-              className="w-20 h-20 rounded-2xl flex items-center justify-center text-2xl font-bold text-white shrink-0 shadow-lg"
-              style={{ backgroundColor: "rgba(255,255,255,0.2)" }}
-            >
-              {provider.name.slice(0, 2).toUpperCase()}
-            </div>
+            <ProviderLogoAvatar provider={provider} size={80} />
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-white">{provider.name}</h1>

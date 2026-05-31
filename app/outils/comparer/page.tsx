@@ -221,12 +221,13 @@ export default function ComparateurCoteCotePage() {
                     borderLeft: "1px solid var(--color-border)",
                   }}
                 >
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-sm font-extrabold mx-auto mb-3"
-                    style={{ backgroundColor: p.brandColor ?? "var(--color-primary)" }}
-                  >
-                    {p.name.slice(0, 2).toUpperCase()}
-                  </div>
+                  {p.logo ? (
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden mx-auto mb-3"><img src={p.logo} alt={p.name} className="w-full h-full object-cover" /></div>
+                  ) : (
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-sm font-extrabold mx-auto mb-3" style={{ backgroundColor: p.brandColor ?? "var(--color-primary)" }}>
+                      {p.name.split(/[\s-]+/).slice(0, 2).map((w: string) => w[0]?.toUpperCase() ?? "").join("")}
+                    </div>
+                  )}
                   <p className="font-extrabold text-base mb-1" style={{ color: "var(--color-text)" }}>{p.name}</p>
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <ScoreBadge score={p.hpScore} />

@@ -112,10 +112,13 @@ export default function MeilleurTransfertArgentPage() {
                   style={{ borderColor: "rgba(255,255,255,0.07)", backgroundColor: i === 0 ? "rgba(107,143,60,0.25)" : "transparent" }}>
                   <span className="text-xs font-extrabold w-5 text-center"
                     style={{ color: i === 0 ? "#F0A500" : "rgba(255,255,255,0.4)" }}>#{i + 1}</span>
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0"
-                    style={{ backgroundColor: p.brandColor ?? "#6B8F3C" }}>
-                    {p.name.slice(0, 2).toUpperCase()}
-                  </div>
+                  {p.logo ? (
+                    <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0"><img src={p.logo} alt={p.name} className="w-full h-full object-cover" /></div>
+                  ) : (
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shrink-0" style={{ backgroundColor: p.brandColor ?? "#6B8F3C" }}>
+                      {p.name.split(/[\s-]+/).slice(0, 2).map((w: string) => w[0]?.toUpperCase() ?? "").join("")}
+                    </div>
+                  )}
                   <p className="flex-1 text-sm font-semibold text-white truncate">{p.name}</p>
                   <span className="text-xs font-extrabold px-2 py-1 rounded-full text-white"
                     style={{ backgroundColor: p.hpScore === "A" ? "#6B8F3C" : p.hpScore === "B" ? "#8FB84E" : "#F0A500" }}>
