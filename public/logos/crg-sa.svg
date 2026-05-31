@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="24" fill="#2E7D32"/>
+  <text x="60" y="48" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="900" fill="white" letter-spacing="1">CRG</text>
+  <line x1="28" y1="60" x2="92" y2="60" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+  <text x="60" y="80" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,0.85)">CRÉDIT RURAL</text>
+</svg>

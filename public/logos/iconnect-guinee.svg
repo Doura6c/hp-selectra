@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="24" fill="#0E6655"/>
+  <!-- Wifi icon -->
+  <path d="M60 72 L60 72" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <path d="M51 63 Q60 55 69 63" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M43 55 Q60 42 77 55" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M35 47 Q60 30 85 47" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="60" y="95" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white">iConnect</text>
+</svg>

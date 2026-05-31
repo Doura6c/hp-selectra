@@ -111,6 +111,7 @@ export const PROVIDERS: ProviderData[] = [
   // ── Télécom ──
   {
     slug: "orange-guinee",
+    logo: "/logos/orange-guinee.svg",
     name: "Orange Guinée",
     verticalSlug: "telecom",
     description: "Leader du marché guinéen avec environ 75 % de parts de marché. Réseau 4G le plus étendu du pays, couplé au service Orange Money.",
@@ -126,6 +127,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "telecel-guinee",
+    logo: "/logos/telecel-guinee.png",
     name: "Telecel Guinée",
     verticalSlug: "telecom",
     description: "Repreneur des activités MTN Guinée. Réseau 3G/4G en expansion sur l'ensemble du territoire, offres data agressives.",
@@ -141,6 +143,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "cellcom-guinee",
+    logo: "/logos/cellcom-guinee.svg",
     name: "Cellcom Guinée",
     verticalSlug: "telecom",
     description: "Opérateur challenger (marque Vana) proposant des forfaits compétitifs sur les zones urbaines de Conakry et grandes villes.",
@@ -156,6 +159,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "guinee-telecoms",
+    logo: "/logos/guinee-telecoms.svg",
     name: "Guinée Télécoms",
     verticalSlug: "telecom",
     description: "Opérateur public (ex-SOTELGUI), spécialiste de l'internet fixe ADSL et fibre optique sur le grand Conakry.",
@@ -168,6 +172,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "vdc-skyvision",
+    logo: "/logos/vdc-skyvision.svg",
     name: "VDC / SkyVision",
     verticalSlug: "telecom",
     description: "Fournisseurs d'accès internet par satellite et faisceau hertzien pour entreprises, ONG et zones non couvertes.",
@@ -180,6 +185,7 @@ export const PROVIDERS: ProviderData[] = [
   // ── Mobile Money ──
   {
     slug: "orange-money",
+    logo: "/logos/orange-money.svg",
     name: "Orange Money",
     verticalSlug: "mobile-money",
     description: "Service de mobile money leader en Guinée. Le réseau d'agents le plus étendu : transferts, paiements de factures, recharges et marchands.",
@@ -195,6 +201,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "mtn-momo",
+    logo: "/logos/mtn-momo.svg",
     name: "MTN MoMo (Telecel)",
     verticalSlug: "mobile-money",
     description: "Portefeuille mobile désormais opéré par Telecel Guinée. Transferts, paiements et retraits sur l'ensemble du réseau Telecel.",
@@ -210,6 +217,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "soutra-money",
+    logo: "/logos/soutra-money.png",
     name: "Soutra Money",
     verticalSlug: "mobile-money",
     description: "Fintech 100 % guinéenne (Digital Pay – Groupe LANALA). Dépôts et retraits GRATUITS. Transfert plafonné à 1 % — le tarif le plus bas du marché. Paiement facture EDG, cartes Visa prépayées.",
@@ -225,6 +233,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "paycard-guinee",
+    logo: "/logos/paycard-guinee.svg",
     name: "PayCard Guinée",
     verticalSlug: "mobile-money",
     description: "Solution de paiement électronique et cartes prépayées interbancaires, acceptée chez de nombreux marchands à Conakry.",
@@ -240,6 +249,7 @@ export const PROVIDERS: ProviderData[] = [
   // ── Banques ──
   {
     slug: "ecobank-guinee",
+    logo: "/logos/ecobank-guinee.svg",
     name: "Ecobank Guinée",
     verticalSlug: "banques",
     description: "Filiale du groupe panafricain Ecobank. Application Ecobank Mobile et plateforme Ecobank Pay parmi les plus complètes du marché guinéen.",
@@ -255,6 +265,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "bicigui",
+    logo: "/logos/bicigui.svg",
     name: "Vista Bank Guinée (ex-BICIGUI)",
     verticalSlug: "banques",
     description: "Anciennement BICIGUI (ex-BNP Paribas), rachetée en 2021 par le groupe Vista Bank. Réseau d'agences le plus étendu de Guinée avec plus de 35 points de service.",
@@ -270,6 +281,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "orabank-guinee",
+    logo: "/logos/orabank-guinee.svg",
     name: "Orabank Guinée",
     verticalSlug: "banques",
     description: "Membre du groupe Oragroup, présent dans une douzaine de pays africains. Offres particuliers, PME et grandes entreprises.",
@@ -285,6 +297,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "uba-guinee",
+    logo: "/logos/uba-guinee.svg",
     name: "UBA Guinée",
     verticalSlug: "banques",
     description: "United Bank for Africa, groupe nigérian. Banque digitale, cartes internationales et large réseau de guichets automatiques.",
@@ -300,6 +313,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "vista-bank-guinee",
+    logo: "/logos/vista-bank-guinee.svg",
     name: "Vista Bank Guinée",
     verticalSlug: "banques",
     description: "Banque en forte croissance (ex-BSIC), orientée innovation et inclusion financière en Guinée.",
@@ -314,6 +328,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "banque-islamique-guinee",
+    logo: "/logos/banque-islamique-guinee.svg",
     name: "Banque Islamique de Guinée",
     verticalSlug: "banques",
     description: "Banque proposant des produits conformes à la finance islamique (sans intérêt / riba) : comptes, financements Mourabaha et épargne halal.",
@@ -330,6 +345,7 @@ export const PROVIDERS: ProviderData[] = [
   // ── FAI (Internet Fixe) ──
   {
     slug: "guinee-telecom-fai",
+    logo: "/logos/guinee-telecom-fai.svg",
     name: "Guinée Télécom",
     verticalSlug: "fai",
     description: "Opérateur public (ex-SOTELGUI), pionnier de l'internet fixe en Guinée. Principal fournisseur ADSL et fibre pour les entreprises et administrations de Conakry.",
@@ -343,6 +359,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "orange-box-guinee",
+    logo: "/logos/orange-box-guinee.svg",
     name: "Orange Box Guinée",
     verticalSlug: "fai",
     description: "Box 4G d'Orange Guinée pour un accès internet haut débit à domicile ou au bureau. S'appuie sur le réseau 4G le plus étendu du pays.",
@@ -355,6 +372,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "telecel-box-fai",
+    logo: "/logos/telecel-box-fai.svg",
     name: "Telecel Box",
     verticalSlug: "fai",
     description: "Box internet 4G de Telecel (Vana) pour une connexion fixe à haut débit. Offres résidentielles et PME avec routeur Wi-Fi inclus.",
@@ -367,6 +385,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "guilab-guinee",
+    logo: "/logos/guilab-guinee.svg",
     name: "GUILAB",
     verticalSlug: "fai",
     description: "FAI privé guinéen spécialisé dans les liaisons fibre et sans fil pour entreprises, ONG et institutions. Offres dédiées avec garantie de débit.",
@@ -378,6 +397,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "iconnect-guinee",
+    logo: "/logos/iconnect-guinee.svg",
     name: "iConnect Guinée",
     verticalSlug: "fai",
     description: "Fournisseur d'accès internet par technologie WiMAX et VSAT. Couvre les zones non desservies par l'ADSL, notamment pour les PME et zones péri-urbaines.",
@@ -390,6 +410,7 @@ export const PROVIDERS: ProviderData[] = [
   // ── Assurances ──
   {
     slug: "nsia-assurances",
+    logo: "/logos/nsia-assurances.svg",
     name: "NSIA Assurances",
     verticalSlug: "assurances",
     description: "Leader du marché guinéen des assurances avec environ 26 % de parts de marché. Compagnie IARD + Vie couvrant auto, santé, habitation, responsabilité civile et vie.",
@@ -405,6 +426,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "ugar-activa",
+    logo: "/logos/ugar-activa.svg",
     name: "UGAR-Activa",
     verticalSlug: "assurances",
     description: "2ᵉ compagnie d'assurance guinéenne (≈ 22 % de parts de marché), membre du groupe Activa. Forte présence en assurance auto et RC professionnelle.",
@@ -419,6 +441,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "sunu-assurances",
+    logo: "/logos/sunu-assurances.svg",
     name: "SUNU Assurances",
     verticalSlug: "assurances",
     description: "Membre du groupe panafricain SUNU (17 pays africains). Produits IARD et vie, présence en Guinée pour particuliers et entreprises.",
@@ -433,6 +456,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "lanala-assurances",
+    logo: "/logos/lanala-assurances.svg",
     name: "Lanala Assurances",
     verticalSlug: "assurances",
     description: "Compagnie d'assurance guinéenne du groupe LANALA. Produits IARD et vie ciblant les particuliers et les PME guinéennes, avec des tarifs compétitifs.",
@@ -447,6 +471,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "saham-sanlam-guinee",
+    logo: "/logos/saham-sanlam-guinee.svg",
     name: "SAHAM / Sanlam Guinée",
     verticalSlug: "assurances",
     description: "Filiale du groupe sud-africain Sanlam (ex-SAHAM Finance). Produits d'assurance vie, épargne et prévoyance pour particuliers et entreprises.",
@@ -462,6 +487,7 @@ export const PROVIDERS: ProviderData[] = [
   // ═══════════ MICROFINANCE ═══════════
   {
     slug: "crg-sa",
+    logo: "/logos/crg-sa.svg",
     name: "Crédit Rural de Guinée (CRG-SA)",
     verticalSlug: "microfinance",
     description: "Premier réseau de microfinance de Guinée. La CRG-SA accompagne les ménages ruraux et urbains depuis 1989 avec des micro-crédits, des produits d'épargne et des financements agricoles à travers plus de 100 caisses locales.",
@@ -485,6 +511,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "finafrica",
+    logo: "/logos/finafrica.svg",
     name: "Finafrica Microfinance",
     verticalSlug: "microfinance",
     description: "Institution de microfinance spécialisée dans le financement des petites et moyennes entreprises guinéennes. Finafrica propose des crédits d'équipement, de fonds de roulement et d'investissement pour les entrepreneurs.",
@@ -506,6 +533,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "akiba-finance",
+    logo: "/logos/akiba-finance.svg",
     name: "Groupe Akiba Finance",
     verticalSlug: "microfinance",
     description: "Institution de microfinance proposant des solutions d'épargne et de crédit aux particuliers, groupements féminins et petits commerçants. Présente à Conakry et dans plusieurs préfectures.",
@@ -527,6 +555,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "cafodec",
+    logo: "/logos/cafodec.svg",
     name: "CAFODEC",
     verticalSlug: "microfinance",
     description: "Caisse de financement pour le développement communautaire. Le CAFODEC sert principalement les zones périurbaines et rurales avec des microcrédits collectifs, des tontines formalisées et des crédits aux femmes.",
@@ -548,6 +577,7 @@ export const PROVIDERS: ProviderData[] = [
   },
   {
     slug: "spacetel-guinee",
+    logo: "/logos/spacetel-guinee.svg",
     name: "Spacetel Guinée",
     verticalSlug: "fai",
     description: "Connexion internet par satellite VSAT Intelsat. Solution idéale pour les entreprises, ONG et sites isolés n'ayant pas accès au réseau terrestre.",

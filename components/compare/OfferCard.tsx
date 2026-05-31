@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import HPScoreBadge from "@/components/ui/HPScoreBadge"
 import PriceTag from "@/components/ui/PriceTag"
 import OfferClickTracker from "@/components/ui/OfferClickTracker"
@@ -8,6 +9,37 @@ type Props = {
   offer: OfferData
   provider: ProviderData
   verticalSlug: string
+}
+
+function ProviderLogo({ provider }: { provider: ProviderData }) {
+  if (provider.logo) {
+    return (
+      <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
+        <Image
+          src={provider.logo}
+          alt={`Logo ${provider.name}`}
+          width={48}
+          height={48}
+          className="w-full h-full object-cover"
+          unoptimized
+        />
+      </div>
+    )
+  }
+  // Fallback : avatar coloré avec initiales
+  const initials = provider.name
+    .split(/[\s-]+/)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? "")
+    .join("")
+  return (
+    <div
+      className="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center shadow-sm"
+      style={{ backgroundColor: provider.brandColor ?? "#6B7280" }}
+    >
+      <span className="text-white font-bold text-sm">{initials}</span>
+    </div>
+  )
 }
 
 export default function OfferCard({ offer, provider, verticalSlug }: Props) {
@@ -31,20 +63,23 @@ export default function OfferCard({ offer, provider, verticalSlug }: Props) {
 
       <div className="p-5">
         <div className="flex items-start justify-between gap-4 mb-4">
-          <div className="flex-1 min-w-0">
-            <p
-              className="text-xs font-medium uppercase tracking-wide mb-1"
-              style={{ color: "var(--color-muted)" }}
-            >
-              {provider.name}
-            </p>
-            <Link
-              href={`/${verticalSlug}/offres/${offer.slug}/`}
-              className="font-bold text-base leading-tight hover:underline"
-              style={{ color: "var(--color-text)" }}
-            >
-              {offer.name}
-            </Link>
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <ProviderLogo provider={provider} />
+            <div className="min-w-0">
+              <p
+                className="text-xs font-medium uppercase tracking-wide mb-1"
+                style={{ color: "var(--color-muted)" }}
+              >
+                {provider.name}
+              </p>
+              <Link
+                href={`/${verticalSlug}/offres/${offer.slug}/`}
+                className="font-bold text-base leading-tight hover:underline"
+                style={{ color: "var(--color-text)" }}
+              >
+                {offer.name}
+              </Link>
+            </div>
           </div>
           <HPScoreBadge score={offer.hpScore} showLabel size="md" />
         </div>

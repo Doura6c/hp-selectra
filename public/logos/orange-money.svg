@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="24" fill="#FF6600"/>
+  <circle cx="60" cy="48" r="22" fill="none" stroke="white" stroke-width="5"/>
+  <text x="60" y="54" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="800" fill="white">€</text>
+  <text x="60" y="85" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white" letter-spacing="0.5">ORANGE MONEY</text>
+</svg>
